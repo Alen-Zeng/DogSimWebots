@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="dog_asm">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.00138 8.263E-08 0.023473"
+        rpy="0 0 0" />
+      <mass
+        value="15.156" />
+      <inertia
+        ixx="0.094082"
+        ixy="-2.6571E-07"
+        ixz="-0.0015648"
+        iyy="0.33465"
+        iyz="4.4097E-09"
+        izz="0.38795" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="ShoulderLF">
+    <inertial>
+      <origin
+        xyz="0.0016347 -1.6089E-09 0.00094061"
+        rpy="0 0 0" />
+      <mass
+        value="0.71324" />
+      <inertia
+        ixx="0.0010272"
+        ixy="7.7865E-09"
+        ixz="1.097E-06"
+        iyy="0.00098524"
+        iyz="-2.0217E-09"
+        izz="0.00080532" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderLF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderLF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JShoulderLF"
+    type="revolute">
+    <origin
+      xyz="0.29653 0.09 0.045"
+      rpy="1.5708 -0.12984 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="ShoulderLF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegUpLF">
+    <inertial>
+      <origin
+        xyz="0.140258977450962 -1.46944706402863E-09 -0.0495880163411742"
+        rpy="0 0 0" />
+      <mass
+        value="1.801530833824" />
+      <inertia
+        ixx="0.00185606576459301"
+        ixy="2.32136084009696E-10"
+        ixz="0.000104100390409144"
+        iyy="0.0253985974507501"
+        iyz="2.08293284963829E-11"
+        izz="0.0245402960534833" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpLF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.803921568627451 0.584313725490196 0.192156862745098 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpLF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegUpLF"
+    type="revolute">
+    <origin
+      xyz="0.14 0 0"
+      rpy="-1.5708 0.92098 -1.5708" />
+    <parent
+      link="ShoulderLF" />
+    <child
+      link="LegUpLF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegDownLF">
+    <inertial>
+      <origin
+        xyz="0.165077124462303 4.80402495561805E-10 -0.014832296749107"
+        rpy="0 0 0" />
+      <mass
+        value="1.05169812231526" />
+      <inertia
+        ixx="0.000495167274562749"
+        ixy="5.33404730717239E-09"
+        ixz="-3.70431431049736E-05"
+        iyy="0.0169793372080291"
+        iyz="-8.27078574898443E-12"
+        izz="0.0171192056980103" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownLF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.819607843137255 0.701960784313725 0.431372549019608 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownLF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegDownLF"
+    type="revolute">
+    <origin
+      xyz="0.33 0 -0.035"
+      rpy="0 0 -2.4666" />
+    <parent
+      link="LegUpLF" />
+    <child
+      link="LegDownLF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="WheelLF">
+    <inertial>
+      <origin
+        xyz="5.55111512312578E-17 2.77555756156289E-17 0.0151686153135472"
+        rpy="0 0 0" />
+      <mass
+        value="0.327510634723198" />
+      <inertia
+        ixx="0.000510561153976038"
+        ixy="-9.3173624197973E-21"
+        ixz="4.76456032830544E-21"
+        iyy="0.000510561153976039"
+        iyz="2.71050543121376E-20"
+        izz="0.000977859052979028" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelLF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.803921568627451 0.584313725490196 0.192156862745098 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelLF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JWheelLF"
+    type="revolute">
+    <origin
+      xyz="0.33 0 0.008"
+      rpy="0 0 0" />
+    <parent
+      link="LegDownLF" />
+    <child
+      link="WheelLF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="ShoulderRF">
+    <inertial>
+      <origin
+        xyz="0.0016347 -3.852E-08 0.0009406"
+        rpy="0 0 0" />
+      <mass
+        value="0.71324" />
+      <inertia
+        ixx="0.0010271"
+        ixy="3.8616E-10"
+        ixz="1.0977E-06"
+        iyy="0.00098521"
+        iyz="-5.2553E-10"
+        izz="0.0008053" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderRF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderRF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JShoulderRF"
+    type="revolute">
+    <origin
+      xyz="0.29653 -0.09 0.045"
+      rpy="-1.5708 0.0031802 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="ShoulderRF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegUpRF">
+    <inertial>
+      <origin
+        xyz="0.14026 -1.4694E-09 -0.029588"
+        rpy="0 0 0" />
+      <mass
+        value="1.8015" />
+      <inertia
+        ixx="0.0018561"
+        ixy="2.3214E-10"
+        ixz="0.0001041"
+        iyy="0.025399"
+        iyz="2.0829E-11"
+        izz="0.02454" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpRF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.80392 0.58431 0.19216 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpRF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegUpRF"
+    type="revolute">
+    <origin
+      xyz="0.12 0 0"
+      rpy="1.5708 0.69315 1.5708" />
+    <parent
+      link="ShoulderRF" />
+    <child
+      link="LegUpRF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegDownRF">
+    <inertial>
+      <origin
+        xyz="0.16508 7.3076E-10 -0.014832"
+        rpy="0 0 0" />
+      <mass
+        value="1.0517" />
+      <inertia
+        ixx="0.00049517"
+        ixy="5.3451E-09"
+        ixz="-3.7043E-05"
+        iyy="0.016979"
+        iyz="-1.2448E-11"
+        izz="0.017119" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownRF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownRF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegDownRF"
+    type="revolute">
+    <origin
+      xyz="0.33 0 -0.015"
+      rpy="0 0 1.9242" />
+    <parent
+      link="LegUpRF" />
+    <child
+      link="LegDownRF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="WheelRF">
+    <inertial>
+      <origin
+        xyz="-5.5511E-17 5.5511E-17 0.015169"
+        rpy="0 0 0" />
+      <mass
+        value="0.32751" />
+      <inertia
+        ixx="0.00051056"
+        ixy="2.7105E-19"
+        ixz="-1.5088E-20"
+        iyy="0.00051056"
+        iyz="-1.3129E-20"
+        izz="0.00097786" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelRF.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.80392 0.58431 0.19216 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelRF.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JWheelRF"
+    type="revolute">
+    <origin
+      xyz="0.33 0 0.008"
+      rpy="0 0 0" />
+    <parent
+      link="LegDownRF" />
+    <child
+      link="WheelRF" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="ShoulderLB">
+    <inertial>
+      <origin
+        xyz="0.0016347 -4.3819E-08 0.0009406"
+        rpy="0 0 0" />
+      <mass
+        value="0.71324" />
+      <inertia
+        ixx="0.0010271"
+        ixy="3.8364E-10"
+        ixz="1.0977E-06"
+        iyy="0.00098521"
+        iyz="-5.1975E-10"
+        izz="0.0008053" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderLB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderLB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JShoulderLB"
+    type="revolute">
+    <origin
+      xyz="-0.29653 0.09 0.045"
+      rpy="-1.5708 -0.012948 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="ShoulderLB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegUpLB">
+    <inertial>
+      <origin
+        xyz="0.14026 -1.4694E-09 -0.029588"
+        rpy="0 0 0" />
+      <mass
+        value="1.8015" />
+      <inertia
+        ixx="0.0018561"
+        ixy="2.3214E-10"
+        ixz="0.0001041"
+        iyy="0.025399"
+        iyz="2.0829E-11"
+        izz="0.02454" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpLB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.80392 0.58431 0.19216 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpLB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegUpLB"
+    type="revolute">
+    <origin
+      xyz="0.12 0 0"
+      rpy="1.5708 -0.98423 1.5708" />
+    <parent
+      link="ShoulderLB" />
+    <child
+      link="LegUpLB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegDownLB">
+    <inertial>
+      <origin
+        xyz="0.16508 7.1429E-10 -0.014832"
+        rpy="0 0 0" />
+      <mass
+        value="1.0517" />
+      <inertia
+        ixx="0.00049517"
+        ixy="5.3443E-09"
+        ixz="-3.7043E-05"
+        iyy="0.016979"
+        iyz="-1.2172E-11"
+        izz="0.017119" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownLB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownLB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegDownLB"
+    type="revolute">
+    <origin
+      xyz="0.33 0 -0.015"
+      rpy="0 0 -2.3761" />
+    <parent
+      link="LegUpLB" />
+    <child
+      link="LegDownLB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="WheelLB">
+    <inertial>
+      <origin
+        xyz="0 2.7756E-17 0.015169"
+        rpy="0 0 0" />
+      <mass
+        value="0.32751" />
+      <inertia
+        ixx="0.00051056"
+        ixy="6.7763E-21"
+        ixz="-9.2115E-21"
+        iyy="0.00051056"
+        iyz="2.9646E-21"
+        izz="0.00097786" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelLB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.80392 0.58431 0.19216 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelLB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JWheelLB"
+    type="revolute">
+    <origin
+      xyz="0.33 0 0.008"
+      rpy="0 0 0" />
+    <parent
+      link="LegDownLB" />
+    <child
+      link="WheelLB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="ShoulderRB">
+    <inertial>
+      <origin
+        xyz="0.0016351 1.4269E-07 0.0009405"
+        rpy="0 0 0" />
+      <mass
+        value="0.71325" />
+      <inertia
+        ixx="0.0010271"
+        ixy="3.7226E-10"
+        ixz="1.0976E-06"
+        iyy="0.00098521"
+        iyz="-4.6128E-10"
+        izz="0.0008053" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderRB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/ShoulderRB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JShoulderRB"
+    type="revolute">
+    <origin
+      xyz="-0.29653 -0.09 0.045"
+      rpy="1.5708 0.082864 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="ShoulderRB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegUpRB">
+    <inertial>
+      <origin
+        xyz="0.14026 -1.4694E-09 -0.029588"
+        rpy="0 0 0" />
+      <mass
+        value="1.8015" />
+      <inertia
+        ixx="0.0018561"
+        ixy="2.3214E-10"
+        ixz="0.0001041"
+        iyy="0.025399"
+        iyz="2.0829E-11"
+        izz="0.02454" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpRB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.80392 0.58431 0.19216 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegUpRB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegUpRB"
+    type="revolute">
+    <origin
+      xyz="0.12 0 0"
+      rpy="-1.5708 -0.91233 -1.5708" />
+    <parent
+      link="ShoulderRB" />
+    <child
+      link="LegUpRB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegDownRB">
+    <inertial>
+      <origin
+        xyz="0.16508 6.1415E-10 -0.014832"
+        rpy="0 0 0" />
+      <mass
+        value="1.0517" />
+      <inertia
+        ixx="0.00049517"
+        ixy="5.3204E-09"
+        ixz="-3.7043E-05"
+        iyy="0.016979"
+        iyz="-1.0373E-11"
+        izz="0.017119" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownRB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.81961 0.70196 0.43137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/LegDownRB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JLegDownRB"
+    type="revolute">
+    <origin
+      xyz="0.33 0 -0.015"
+      rpy="0 0 2.1041" />
+    <parent
+      link="LegUpRB" />
+    <child
+      link="LegDownRB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="WheelRB">
+    <inertial>
+      <origin
+        xyz="0 0 0.015169"
+        rpy="0 0 0" />
+      <mass
+        value="0.32751" />
+      <inertia
+        ixx="0.00051056"
+        ixy="-2.7105E-19"
+        ixz="-8.4703E-21"
+        iyy="0.00051056"
+        iyz="1.3553E-20"
+        izz="0.00097786" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelRB.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.80392 0.58431 0.19216 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dog_asm/meshes/WheelRB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="JWheelRB"
+    type="revolute">
+    <origin
+      xyz="0.33 0 0.008"
+      rpy="0 0 0" />
+    <parent
+      link="LegDownRB" />
+    <child
+      link="WheelRB" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>
