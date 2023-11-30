@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
   Motor *ShoulderRB = robot->getMotor("JShoulderRB");
   ShoulderRB->setPosition(INFINITY);
   ShoulderRB->setVelocity(0.0);
+  
 
   // Main loop:
   // - perform simulation steps until Webots is stopping the controller
@@ -51,10 +52,7 @@ int main(int argc, char **argv) {
     // Read the sensors:
     // Enter here functions to read sensor data, like:
     //  double val = ds->getValue();
-    ShoulderLF->setTorque(0.0);
-    ShoulderRF->setTorque(0.0);
-    ShoulderLB->setTorque(0.0);
-    ShoulderRB->setTorque(0.0);
+    
     // Process sensor data here.
 
     // Enter here functions to send actuator commands, like:
