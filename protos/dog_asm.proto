@@ -2,7 +2,7 @@
 # license: Apache License 2.0
 # license url: http://www.apache.org/licenses/LICENSE-2.0
 # This is a proto file for Webots for the dog_asm
-# Extracted from: E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/urdf/dog_asm.urdf
+# Extracted from: urdf/dog_asm.urdf
 
 PROTO dog_asm [
   field  SFVec3f     translation     0 0 0
@@ -33,7 +33,7 @@ PROTO dog_asm [
           metalness 0
         }
         geometry DEF base_link Mesh {
-          url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/base_link.STL"
+          url "meshes/base_link.STL"
         }
       }
       HingeJoint {
@@ -61,7 +61,7 @@ PROTO dog_asm [
                 metalness 0
               }
               geometry DEF ShoulderLF Mesh {
-                url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/ShoulderLF.STL"
+                url "meshes/ShoulderLF.STL"
               }
             }
             HingeJoint {
@@ -89,7 +89,7 @@ PROTO dog_asm [
                       metalness 0
                     }
                     geometry DEF LegUpLF Mesh {
-                      url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegUpLF.STL"
+                      url "meshes/LegUpLF.STL"
                     }
                   }
                   HingeJoint {
@@ -117,7 +117,7 @@ PROTO dog_asm [
                             metalness 0
                           }
                           geometry DEF LegDownLF Mesh {
-                            url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegDownLF.STL"
+                            url "meshes/LegDownLF.STL"
                           }
                         }
                         HingeJoint {
@@ -144,7 +144,7 @@ PROTO dog_asm [
                                   metalness 0
                                 }
                                 geometry DEF WheelLF Mesh {
-                                  url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/WheelLF.STL"
+                                  url "meshes/WheelLF.STL"
                                 }
                               }
                             ]
@@ -228,7 +228,7 @@ PROTO dog_asm [
                 metalness 0
               }
               geometry DEF ShoulderRF Mesh {
-                url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/ShoulderRF.STL"
+                url "meshes/ShoulderRF.STL"
               }
             }
             HingeJoint {
@@ -256,7 +256,7 @@ PROTO dog_asm [
                       metalness 0
                     }
                     geometry DEF LegUpRF Mesh {
-                      url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegUpRF.STL"
+                      url "meshes/LegUpRF.STL"
                     }
                   }
                   HingeJoint {
@@ -284,7 +284,7 @@ PROTO dog_asm [
                             metalness 0
                           }
                           geometry DEF LegDownRF Mesh {
-                            url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegDownRF.STL"
+                            url "meshes/LegDownRF.STL"
                           }
                         }
                         HingeJoint {
@@ -311,7 +311,7 @@ PROTO dog_asm [
                                   metalness 0
                                 }
                                 geometry DEF WheelRF Mesh {
-                                  url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/WheelRF.STL"
+                                  url "meshes/WheelRF.STL"
                                 }
                               }
                             ]
@@ -395,7 +395,7 @@ PROTO dog_asm [
                 metalness 0
               }
               geometry DEF ShoulderLB Mesh {
-                url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/ShoulderLB.STL"
+                url "meshes/ShoulderLB.STL"
               }
             }
             HingeJoint {
@@ -423,7 +423,7 @@ PROTO dog_asm [
                       metalness 0
                     }
                     geometry DEF LegUpLB Mesh {
-                      url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegUpLB.STL"
+                      url "meshes/LegUpLB.STL"
                     }
                   }
                   HingeJoint {
@@ -451,7 +451,7 @@ PROTO dog_asm [
                             metalness 0
                           }
                           geometry DEF LegDownLB Mesh {
-                            url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegDownLB.STL"
+                            url "meshes/LegDownLB.STL"
                           }
                         }
                         HingeJoint {
@@ -478,7 +478,7 @@ PROTO dog_asm [
                                   metalness 0
                                 }
                                 geometry DEF WheelLB Mesh {
-                                  url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/WheelLB.STL"
+                                  url "meshes/WheelLB.STL"
                                 }
                               }
                             ]
@@ -562,7 +562,7 @@ PROTO dog_asm [
                 metalness 0
               }
               geometry DEF ShoulderRB Mesh {
-                url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/ShoulderRB.STL"
+                url "meshes/ShoulderRB.STL"
               }
             }
             HingeJoint {
@@ -590,7 +590,7 @@ PROTO dog_asm [
                       metalness 0
                     }
                     geometry DEF LegUpRB Mesh {
-                      url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegUpRB.STL"
+                      url "meshes/LegUpRB.STL"
                     }
                   }
                   HingeJoint {
@@ -618,7 +618,7 @@ PROTO dog_asm [
                             metalness 0
                           }
                           geometry DEF LegDownRB Mesh {
-                            url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/LegDownRB.STL"
+                            url "meshes/LegDownRB.STL"
                           }
                         }
                         HingeJoint {
@@ -645,7 +645,7 @@ PROTO dog_asm [
                                   metalness 0
                                 }
                                 geometry DEF WheelRB Mesh {
-                                  url "E:/APPData/WebotDoc/Dogtest/DogURDF/dog_asm/meshes/WheelRB.STL"
+                                  url "meshes/WheelRB.STL"
                                 }
                               }
                             ]
