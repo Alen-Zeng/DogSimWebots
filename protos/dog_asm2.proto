@@ -107,8 +107,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownLF"
                         maxTorque 10000
-                        maxPosition 2.61799
-                        minPosition -2.61799
+                        maxPosition 2.61800
+                        minPosition -2.61800
                       }
                       PositionSensor {
                         name "JLegDownLF_sensor"
@@ -280,8 +280,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownRF"
                         maxTorque 10000
-                        maxPosition 2.61799
-                        minPosition -2.61799
+                        maxPosition 2.61800
+                        minPosition -2.61800
                       }
                       PositionSensor {
                         name "JLegDownRF_sensor"
@@ -452,8 +452,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownLB"
                         maxTorque 10000
-                        maxPosition 2.61799
-                        minPosition -2.61799
+                        maxPosition 2.61800
+                        minPosition -2.61800
                       }
                       PositionSensor {
                         name "JLegDownLB_sensor"
@@ -626,8 +626,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownRB"
                         maxTorque 10000
-                        maxPosition 2.61799
-                        minPosition -2.61799
+                        maxPosition 2.61800
+                        minPosition -2.61800
                       }
                       PositionSensor {
                         name "JLegDownRB_sensor"

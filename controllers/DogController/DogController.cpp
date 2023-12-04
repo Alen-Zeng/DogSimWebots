@@ -17,16 +17,12 @@ int main(int argc, char **argv)
 
   // get the time step of the current world.
   timeStep = (int)robot->getBasicTimeStep();
-  DogLegInit(timeStep, robot, Legs);
+  DogInit(timeStep, robot, Legs);
 
-  // Main loop:
-  // - perform simulation steps until Webots is stopping the controller
   while (robot->step(timeStep) != -1) {
 
 
   };
-
-  // Enter here exit cleanup code.
 
   delete robot;
   return 0;

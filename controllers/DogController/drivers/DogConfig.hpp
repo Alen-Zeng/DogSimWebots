@@ -18,28 +18,28 @@
  * @param timestep 仿真周期
  * @param legs 
  */
-void DogLegInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
+void DogInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
 {
   /* 获取关节电机 */
-  legs[LF].LegJoint[Shoulder]=robot->getMotor("JShoulderLF");
-  legs[LF].LegJoint[LegUp] = robot->getMotor("JLegUpLF");
-  legs[LF].LegJoint[LegDown] = robot->getMotor("JLegDownLF");
-  legs[LF].LegJoint[Wheel] = robot->getMotor("JWheelLF");
+  legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Shoulder]=robot->getMotor("JShoulderLF");
+  legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::LegUp] = robot->getMotor("JLegUpLF");
+  legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::LegDown] = robot->getMotor("JLegDownLF");
+  legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Wheel] = robot->getMotor("JWheelLF");
 
-  legs[RF].LegJoint[Shoulder] = robot->getMotor("JShoulderRF");
-  legs[RF].LegJoint[LegUp] = robot->getMotor("JLegUpRF");
-  legs[RF].LegJoint[LegDown] = robot->getMotor("JLegDownRF");
-  legs[RF].LegJoint[Wheel] = robot->getMotor("JWheelRF");
+  legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::Shoulder] = robot->getMotor("JShoulderRF");
+  legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::LegUp] = robot->getMotor("JLegUpRF");
+  legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::LegDown] = robot->getMotor("JLegDownRF");
+  legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::Wheel] = robot->getMotor("JWheelRF");
 
-  legs[LB].LegJoint[Shoulder] = robot->getMotor("JShoulderLB");
-  legs[LB].LegJoint[LegUp] = robot->getMotor("JLegUpLB");
-  legs[LB].LegJoint[LegDown] = robot->getMotor("JLegDownLB");
-  legs[LB].LegJoint[Wheel] = robot->getMotor("JWheelLB");
+  legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::Shoulder] = robot->getMotor("JShoulderLB");
+  legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::LegUp] = robot->getMotor("JLegUpLB");
+  legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::LegDown] = robot->getMotor("JLegDownLB");
+  legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::Wheel] = robot->getMotor("JWheelLB");
 
-  legs[RB].LegJoint[Shoulder] = robot->getMotor("JShoulderRB");
-  legs[RB].LegJoint[LegUp] = robot->getMotor("JLegUpRB");
-  legs[RB].LegJoint[LegDown] = robot->getMotor("JLegDownRB");
-  legs[RB].LegJoint[Wheel] = robot->getMotor("JWheelRB");
+  legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::Shoulder] = robot->getMotor("JShoulderRB");
+  legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::LegUp] = robot->getMotor("JLegUpRB");
+  legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::LegDown] = robot->getMotor("JLegDownRB");
+  legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::Wheel] = robot->getMotor("JWheelRB");
 
   for (size_t i = 0; i < 4; i++)
   {
@@ -52,26 +52,26 @@ void DogLegInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
   }
   std::cout << "Motors Initialized" << std::endl;
 
-    /* 获取关节位置传感器 */
-  legs[LF].LegPosSensor[Shoulder]=robot->getPositionSensor("JShoulderLF_sensor");
-  legs[LF].LegPosSensor[LegUp] = robot->getPositionSensor("JLegUpLF_sensor");
-  legs[LF].LegPosSensor[LegDown] = robot->getPositionSensor("JLegDownLF_sensor");
-  legs[LF].LegPosSensor[Wheel] = robot->getPositionSensor("JWheelLF_sensor");
+  /* 获取关节位置传感器 */
+  legs[(int)DirEnumdef::LF].LegPosSensor[(int)JointEnumdef::Shoulder]=robot->getPositionSensor("JShoulderLF_sensor");
+  legs[(int)DirEnumdef::LF].LegPosSensor[(int)JointEnumdef::LegUp] = robot->getPositionSensor("JLegUpLF_sensor");
+  legs[(int)DirEnumdef::LF].LegPosSensor[(int)JointEnumdef::LegDown] = robot->getPositionSensor("JLegDownLF_sensor");
+  legs[(int)DirEnumdef::LF].LegPosSensor[(int)JointEnumdef::Wheel] = robot->getPositionSensor("JWheelLF_sensor");
 
-  legs[RF].LegPosSensor[Shoulder] = robot->getPositionSensor("JShoulderRF_sensor");
-  legs[RF].LegPosSensor[LegUp] = robot->getPositionSensor("JLegUpRF_sensor");
-  legs[RF].LegPosSensor[LegDown] = robot->getPositionSensor("JLegDownRF_sensor");
-  legs[RF].LegPosSensor[Wheel] = robot->getPositionSensor("JWheelRF_sensor");
+  legs[(int)DirEnumdef::RF].LegPosSensor[(int)JointEnumdef::Shoulder] = robot->getPositionSensor("JShoulderRF_sensor");
+  legs[(int)DirEnumdef::RF].LegPosSensor[(int)JointEnumdef::LegUp] = robot->getPositionSensor("JLegUpRF_sensor");
+  legs[(int)DirEnumdef::RF].LegPosSensor[(int)JointEnumdef::LegDown] = robot->getPositionSensor("JLegDownRF_sensor");
+  legs[(int)DirEnumdef::RF].LegPosSensor[(int)JointEnumdef::Wheel] = robot->getPositionSensor("JWheelRF_sensor");
 
-  legs[LB].LegPosSensor[Shoulder] = robot->getPositionSensor("JShoulderLB_sensor");
-  legs[LB].LegPosSensor[LegUp] = robot->getPositionSensor("JLegUpLB_sensor");
-  legs[LB].LegPosSensor[LegDown] = robot->getPositionSensor("JLegDownLB_sensor");
-  legs[LB].LegPosSensor[Wheel] = robot->getPositionSensor("JWheelLB_sensor");
+  legs[(int)DirEnumdef::LB].LegPosSensor[(int)JointEnumdef::Shoulder] = robot->getPositionSensor("JShoulderLB_sensor");
+  legs[(int)DirEnumdef::LB].LegPosSensor[(int)JointEnumdef::LegUp] = robot->getPositionSensor("JLegUpLB_sensor");
+  legs[(int)DirEnumdef::LB].LegPosSensor[(int)JointEnumdef::LegDown] = robot->getPositionSensor("JLegDownLB_sensor");
+  legs[(int)DirEnumdef::LB].LegPosSensor[(int)JointEnumdef::Wheel] = robot->getPositionSensor("JWheelLB_sensor");
 
-  legs[RB].LegPosSensor[Shoulder] = robot->getPositionSensor("JShoulderRB_sensor");
-  legs[RB].LegPosSensor[LegUp] = robot->getPositionSensor("JLegUpRB_sensor");
-  legs[RB].LegPosSensor[LegDown] = robot->getPositionSensor("JLegDownRB_sensor");
-  legs[RB].LegPosSensor[Wheel] = robot->getPositionSensor("JWheelRB_sensor");
+  legs[(int)DirEnumdef::RB].LegPosSensor[(int)JointEnumdef::Shoulder] = robot->getPositionSensor("JShoulderRB_sensor");
+  legs[(int)DirEnumdef::RB].LegPosSensor[(int)JointEnumdef::LegUp] = robot->getPositionSensor("JLegUpRB_sensor");
+  legs[(int)DirEnumdef::RB].LegPosSensor[(int)JointEnumdef::LegDown] = robot->getPositionSensor("JLegDownRB_sensor");
+  legs[(int)DirEnumdef::RB].LegPosSensor[(int)JointEnumdef::Wheel] = robot->getPositionSensor("JWheelRB_sensor");
   /* 启动关节位置传感器 */
   for (size_t i = 0; i < 4; i++)
   {
@@ -79,9 +79,61 @@ void DogLegInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
     {
       legs[i].LegPosSensor[j]->enable(timestep);
     }
+    if (robot->step(timestep) != -1)
+    {
+      for (int s = 0; s < 4; s++)
+      {
+        legs->JointPosition[s] = legs[i].LegPosSensor[s]->getValue();
+      }
+    }
   }
   std::cout << "Position Sensors Initialized" << std::endl;
+  
+  /* 记录关节限位 */
+  legs[(int)DirEnumdef::LF].ShoulderScope[0] = 1.57080;
+  legs[(int)DirEnumdef::LF].ShoulderScope[1] = -0.34906;
+  legs[(int)DirEnumdef::LF].LegUpScope[0] = 3.14159;
+  legs[(int)DirEnumdef::LF].LegUpScope[1] = -3.14158;
+  legs[(int)DirEnumdef::LF].LegDownScope[0] = 2.61799;
+  legs[(int)DirEnumdef::LF].LegDownScope[1] = -2.61799;
 
+  legs[(int)DirEnumdef::RF].ShoulderScope[0] = 0.34906;
+  legs[(int)DirEnumdef::RF].ShoulderScope[1] = -1.57080;
+  legs[(int)DirEnumdef::RF].LegUpScope[0] = 3.14159;
+  legs[(int)DirEnumdef::RF].LegUpScope[1] = -3.14158;
+  legs[(int)DirEnumdef::RF].LegDownScope[0] = 2.61799;
+  legs[(int)DirEnumdef::RF].LegDownScope[1] = -2.61799;
+
+  legs[(int)DirEnumdef::LB].ShoulderScope[0] = 0.34906;
+  legs[(int)DirEnumdef::LB].ShoulderScope[1] = -1.57080;
+  legs[(int)DirEnumdef::LB].LegUpScope[0] = 3.14159;
+  legs[(int)DirEnumdef::LB].LegUpScope[1] = -3.14158;
+  legs[(int)DirEnumdef::LB].LegDownScope[0] = 2.61799;
+  legs[(int)DirEnumdef::LB].LegDownScope[1] = -2.61799;
+  
+  legs[(int)DirEnumdef::RB].ShoulderScope[0] = 1.57080;
+  legs[(int)DirEnumdef::RB].ShoulderScope[1] = -0.34906;
+  legs[(int)DirEnumdef::RB].LegUpScope[0] = 3.14159;
+  legs[(int)DirEnumdef::RB].LegUpScope[1] = -3.14158;
+  legs[(int)DirEnumdef::RB].LegDownScope[0] = 2.61799;
+  legs[(int)DirEnumdef::RB].LegDownScope[1] = -2.61799;
+
+  /* 关节复位 */
+  while ((!legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140)) 
+      || !legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140)) 
+      || !legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140)) 
+      || !legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140)))
+      && robot->step(timestep) != -1)
+      {
+        legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140));
+        legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140));
+        legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140));
+        legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140));
+      std::cout << "Legs Reseting" << std::endl;
+      }
+  std::cout << "Legs Reset" << std::endl;
+
+  std::cout << "All Initialized" << std::endl;
 }
 
 /************************ COPYRIGHT(C) SCUT-ROBOTLAB **************************/
