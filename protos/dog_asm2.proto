@@ -13,7 +13,7 @@ PROTO dog_asm2 [
   field  SFString    customData      ""          # Is `Robot.customData`.
   field  SFBool      supervisor      FALSE       # Is `Robot.supervisor`.
   field  SFBool      synchronization TRUE        # Is `Robot.synchronization`.
-  field  SFBool      selfCollision   FALSE       # Is `Robot.selfCollision`.
+  field  SFBool      selfCollision   TRUE        # Is `Robot.selfCollision`.
 ]
 {
   Robot {
@@ -38,7 +38,8 @@ PROTO dog_asm2 [
       }
       HingeJoint {
         jointParameters HingeJointParameters {
-          axis -1.000000 0.000000 -0.000000
+          # axis -1.000000 0.000000 -0.000000
+          axis 1.000000 0.000000 -0.000000
           anchor 0.296530 0.090000 0.045000
         }
         device [
@@ -538,7 +539,8 @@ PROTO dog_asm2 [
       }
       HingeJoint {
         jointParameters HingeJointParameters {
-          axis 1.000000 0.000000 0.000000
+          # axis 1.000000 0.000000 0.000000
+          axis -1.000000 0.000000 0.000000
           anchor -0.296530 -0.090000 0.045000
         }
         device [

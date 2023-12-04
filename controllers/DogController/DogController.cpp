@@ -49,9 +49,11 @@ int main(int argc, char **argv) {
     // Legs[Wheel][LB]->setPosition(postest);
     // Legs[Wheel][RB]->setVelocity(10);
     // Legs[Wheel][RB]->setPosition(-postest);
-    std::cout << LegsPos[LegDown][LF]->getValue() << std::endl;
+    std::cout << LegsPos[Shoulder][LF]->getValue() << std::endl;
+    Legs[Shoulder][LF]->setPosition(postest);
+    std::cout << LegsPos[Shoulder][RF]->getValue() << std::endl;
+    Legs[Shoulder][RF]->setPosition(postest);
     postest += 1;
-    Legs[LegDown][LF]->setPosition(postest);
 
     // Process sensor data here.
 
