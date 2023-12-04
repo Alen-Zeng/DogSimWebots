@@ -3,7 +3,7 @@
 #include <webots/Robot.hpp>
 #include <webots/Motor.hpp>
 #include <webots/PositionSensor.hpp>
-/* -------- types ------------------------------------------------------------*/
+/* Types ---------------------------------------------------------------------*/
 enum LegEnumdef
 {
   Shoulder,
@@ -41,9 +41,23 @@ public:
   DogLeg(/* args */){};
   ~DogLeg(){};
 
+  void Reset();
+  void SetHeight(double height);
+  void SetWheelVelocity(double velocity);
 };
-/* -------- macros -----------------------------------------------------------*/
+
+
+/* Macros --------------------------------------------------------------------*/
 int timeStep; /* 仿真周期 */
 DogLeg Legs[4];
-/* -------- function declarations --------------------------------------------*/
 
+/* Function declarations -----------------------------------------------------*/
+
+/**
+ * @brief reset leg position
+ * 
+ */
+void DogLeg::Reset()
+{
+  
+}
