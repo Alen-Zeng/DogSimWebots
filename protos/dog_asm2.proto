@@ -1,19 +1,19 @@
 #VRML_SIM R2023b utf8
 # license: Apache License 2.0
 # license url: http://www.apache.org/licenses/LICENSE-2.0
-# This is a proto file for Webots for the dog_asm
-# Extracted from: urdf/dog_asm.urdf
+# This is a proto file for Webots for the dog_asm2
+# Extracted from: E:\APPData\WebotDoc\Dogtest\DogURDF\dog_asm2\urdf\dog_asm2.urdf
 
-PROTO dog_asm [
+PROTO dog_asm2 [
   field  SFVec3f     translation     0 0 0
   field  SFRotation  rotation        0 0 1 0
-  field  SFString    name            "dog_asm"  # Is `Robot.name`.
-  field  SFString    controller      "void"     # Is `Robot.controller`.
-  field  MFString    controllerArgs  []         # Is `Robot.controllerArgs`.
-  field  SFString    customData      ""         # Is `Robot.customData`.
-  field  SFBool      supervisor      FALSE      # Is `Robot.supervisor`.
-  field  SFBool      synchronization TRUE       # Is `Robot.synchronization`.
-  field  SFBool      selfCollision   TRUE       # Is `Robot.selfCollision`.
+  field  SFString    name            "dog_asm2"  # Is `Robot.name`.
+  field  SFString    controller      "void"      # Is `Robot.controller`.
+  field  MFString    controllerArgs  []          # Is `Robot.controllerArgs`.
+  field  SFString    customData      ""          # Is `Robot.customData`.
+  field  SFBool      supervisor      FALSE       # Is `Robot.supervisor`.
+  field  SFBool      synchronization TRUE        # Is `Robot.synchronization`.
+  field  SFBool      selfCollision   FALSE       # Is `Robot.selfCollision`.
 ]
 {
   Robot {
@@ -27,18 +27,18 @@ PROTO dog_asm [
     selfCollision IS selfCollision
     children [
       Shape {
-        appearance DEF base_link_material PBRAppearance {
-          baseColor 1.000000 0.844610 0.620030
+        appearance DEF Body_material PBRAppearance {
+          baseColor 0.792160 0.819610 0.933330
           roughness 1.000000
           metalness 0
         }
-        geometry DEF base_link Mesh {
-          url "meshes/base_link.STL"
+        geometry DEF Body Mesh {
+          url "meshes/Body.STL"
         }
       }
       HingeJoint {
         jointParameters HingeJointParameters {
-          axis 1.000000 0.000000 -0.000000
+          axis -1.000000 0.000000 -0.000000
           anchor 0.296530 0.090000 0.045000
         }
         device [
@@ -52,11 +52,12 @@ PROTO dog_asm [
         ]
         endPoint Solid {
           translation 0.296530 0.090000 0.045000
-          rotation 0.600762 0.527419 0.600762 2.170916
+          # rotation 0.000000 -1.000000 0.000000 1.570800
+          rotation 0.707108 0.000000 0.707108 3.141592
           children [
             Shape {
               appearance DEF ShoulderLF_material PBRAppearance {
-                baseColor 0.819610 0.701960 0.431370
+                baseColor 0.792160 0.819610 0.933330
                 roughness 1.000000
                 metalness 0
               }
@@ -66,8 +67,8 @@ PROTO dog_asm [
             }
             HingeJoint {
               jointParameters HingeJointParameters {
-                axis 1.000000 -0.000000 -0.000000
-                anchor 0.140000 0.000000 0.000000
+                axis 0.000000 -1.000000 -0.000000
+                anchor 0.000000 -0.140000 0.000000
               }
               device [
                 RotationalMotor {
@@ -79,12 +80,12 @@ PROTO dog_asm [
                 }
               ]
               endPoint Solid {
-                translation 0.140000 0.000000 0.000000
-                rotation -0.304103 0.902797 -0.304103 1.672878
+                translation 0.000000 -0.140000 0.000000
+                rotation 0.000003 -0.707108 0.707105 3.141598
                 children [
                   Shape {
                     appearance DEF LegUpLF_material PBRAppearance {
-                      baseColor 0.803922 0.584314 0.192157
+                      baseColor 0.792160 0.819610 0.933330
                       roughness 1.000000
                       metalness 0
                     }
@@ -94,7 +95,7 @@ PROTO dog_asm [
                   }
                   HingeJoint {
                     jointParameters HingeJointParameters {
-                      axis 0.000000 -0.000000 1.000000
+                      axis 0.000000 0.000000 1.000000
                       anchor 0.330000 0.000000 -0.035000
                     }
                     device [
@@ -108,11 +109,10 @@ PROTO dog_asm [
                     ]
                     endPoint Solid {
                       translation 0.330000 0.000000 -0.035000
-                      rotation 0.000000 0.000000 -1.000000 2.466600
                       children [
                         Shape {
                           appearance DEF LegDownLF_material PBRAppearance {
-                            baseColor 0.819608 0.701961 0.431373
+                            baseColor 0.792160 0.819610 0.933330
                             roughness 1.000000
                             metalness 0
                           }
@@ -139,7 +139,7 @@ PROTO dog_asm [
                             children [
                               Shape {
                                 appearance DEF WheelLF_material PBRAppearance {
-                                  baseColor 0.803922 0.584314 0.192157
+                                  baseColor 0.792160 0.819610 0.933330
                                   roughness 1.000000
                                   metalness 0
                                 }
@@ -152,11 +152,11 @@ PROTO dog_asm [
                             boundingObject USE WheelLF
                             physics Physics {
                               density -1
-                              mass 0.327511
-                              centerOfMass [ 0.000000 0.000000 0.015169 ]
+                              mass 0.327510
+                              centerOfMass [ -0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
-                                5.105612e-04 5.105612e-04 9.778591e-04
-                                -9.317362e-21 4.764560e-21 2.710505e-20
+                                5.105600e-04 5.105600e-04 9.778600e-04
+                                -2.283000e-21 -8.891100e-21 -6.918000e-22
                               ]
                             }
                           }
@@ -166,11 +166,11 @@ PROTO dog_asm [
                       boundingObject USE LegDownLF
                       physics Physics {
                         density -1
-                        mass 1.051698
-                        centerOfMass [ 0.165077 0.000000 -0.014832 ]
+                        mass 1.051700
+                        centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
-                          4.951673e-04 1.697934e-02 1.711921e-02
-                          5.334047e-09 -3.704314e-05 -8.270786e-12
+                          4.951700e-04 1.697900e-02 1.711900e-02
+                          5.345300e-09 -3.704300e-05 -1.256600e-11
                         ]
                       }
                     }
@@ -180,11 +180,11 @@ PROTO dog_asm [
                 boundingObject USE LegUpLF
                 physics Physics {
                   density -1
-                  mass 1.801531
-                  centerOfMass [ 0.140259 -0.000000 -0.049588 ]
+                  mass 1.801500
+                  centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
-                    1.856066e-03 2.539860e-02 2.454030e-02
-                    2.321361e-10 1.041004e-04 2.082933e-11
+                    1.856100e-03 2.539900e-02 2.454000e-02
+                    2.321400e-10 1.041000e-04 2.082900e-11
                   ]
                 }
               }
@@ -195,17 +195,17 @@ PROTO dog_asm [
           physics Physics {
             density -1
             mass 0.713240
-            centerOfMass [ 0.001635 -0.000000 0.000941 ]
+            centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
-              1.027200e-03 9.852400e-04 8.053200e-04
-              7.786500e-09 1.097000e-06 -2.021700e-09
+              9.852100e-04 1.027100e-03 8.053000e-04
+              -3.857000e-10 -5.274300e-10 -1.097700e-06
             ]
           }
         }
       }
       HingeJoint {
         jointParameters HingeJointParameters {
-          axis 1.000000 -0.000000 -0.000000
+          axis 1.000000 0.000000 -0.000000
           anchor 0.296530 -0.090000 0.045000
         }
         device [
@@ -219,11 +219,11 @@ PROTO dog_asm [
         ]
         endPoint Solid {
           translation 0.296530 -0.090000 0.045000
-          rotation -0.576737 0.578576 -0.576737 2.092564
+          rotation 0.000000 1.000000 0.000000 1.570800
           children [
             Shape {
               appearance DEF ShoulderRF_material PBRAppearance {
-                baseColor 0.819610 0.701960 0.431370
+                baseColor 0.792160 0.819610 0.933330
                 roughness 1.000000
                 metalness 0
               }
@@ -233,8 +233,8 @@ PROTO dog_asm [
             }
             HingeJoint {
               jointParameters HingeJointParameters {
-                axis 1.000000 0.000000 -0.000000
-                anchor 0.120000 0.000000 0.000000
+                axis 0.000000 -1.000000 -0.000000
+                anchor 0.000000 -0.140000 0.000000
               }
               device [
                 RotationalMotor {
@@ -246,12 +246,13 @@ PROTO dog_asm [
                 }
               ]
               endPoint Solid {
-                translation 0.120000 0.000000 0.000000
-                rotation 0.391042 0.833170 0.391042 1.752313
+                translation 0.000000 -0.140000 0.000000
+                # rotation 0.000003 -0.707108 0.707105 3.141598
+                rotation 1.000000 0.000000 0.000000 1.570800
                 children [
                   Shape {
                     appearance DEF LegUpRF_material PBRAppearance {
-                      baseColor 0.803920 0.584310 0.192160
+                      baseColor 0.792160 0.819610 0.933330
                       roughness 1.000000
                       metalness 0
                     }
@@ -262,7 +263,7 @@ PROTO dog_asm [
                   HingeJoint {
                     jointParameters HingeJointParameters {
                       axis 0.000000 0.000000 1.000000
-                      anchor 0.330000 0.000000 -0.015000
+                      anchor 0.330000 0.000000 -0.035000
                     }
                     device [
                       RotationalMotor {
@@ -274,12 +275,11 @@ PROTO dog_asm [
                       }
                     ]
                     endPoint Solid {
-                      translation 0.330000 0.000000 -0.015000
-                      rotation 0.000000 0.000000 1.000000 1.924200
+                      translation 0.330000 0.000000 -0.035000
                       children [
                         Shape {
                           appearance DEF LegDownRF_material PBRAppearance {
-                            baseColor 0.819610 0.701960 0.431370
+                            baseColor 0.792160 0.819610 0.933330
                             roughness 1.000000
                             metalness 0
                           }
@@ -306,7 +306,7 @@ PROTO dog_asm [
                             children [
                               Shape {
                                 appearance DEF WheelRF_material PBRAppearance {
-                                  baseColor 0.803920 0.584310 0.192160
+                                  baseColor 0.792160 0.819610 0.933330
                                   roughness 1.000000
                                   metalness 0
                                 }
@@ -320,10 +320,10 @@ PROTO dog_asm [
                             physics Physics {
                               density -1
                               mass 0.327510
-                              centerOfMass [ -0.000000 0.000000 0.015169 ]
+                              centerOfMass [ 0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
-                                2.710500e-19 -1.508800e-20 -1.312900e-20
+                                -3.213600e-21 -8.891100e-21 -6.430800e-22
                               ]
                             }
                           }
@@ -337,7 +337,7 @@ PROTO dog_asm [
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
-                          5.345100e-09 -3.704300e-05 -1.244800e-11
+                          5.345300e-09 -3.704300e-05 -1.256600e-11
                         ]
                       }
                     }
@@ -348,7 +348,7 @@ PROTO dog_asm [
                 physics Physics {
                   density -1
                   mass 1.801500
-                  centerOfMass [ 0.140260 -0.000000 -0.029588 ]
+                  centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
                     2.321400e-10 1.041000e-04 2.082900e-11
@@ -362,17 +362,17 @@ PROTO dog_asm [
           physics Physics {
             density -1
             mass 0.713240
-            centerOfMass [ 0.001635 -0.000000 0.000941 ]
+            centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
-              1.027100e-03 9.852100e-04 8.053000e-04
-              3.861600e-10 1.097700e-06 -5.255300e-10
+              9.852100e-04 1.027100e-03 8.053000e-04
+              -3.857000e-10 -5.274300e-10 -1.097700e-06
             ]
           }
         }
       }
       HingeJoint {
         jointParameters HingeJointParameters {
-          axis -1.000000 -0.000000 -0.000000
+          axis -1.000000 0.000000 0.000000
           anchor -0.296530 0.090000 0.045000
         }
         device [
@@ -386,11 +386,11 @@ PROTO dog_asm [
         ]
         endPoint Solid {
           translation -0.296530 0.090000 0.045000
-          rotation -0.574842 -0.582335 0.574842 2.086940
+          rotation 0.707105 -0.000003 -0.707108 3.141598
           children [
             Shape {
               appearance DEF ShoulderLB_material PBRAppearance {
-                baseColor 0.819610 0.701960 0.431370
+                baseColor 0.792160 0.819610 0.933330
                 roughness 1.000000
                 metalness 0
               }
@@ -400,8 +400,8 @@ PROTO dog_asm [
             }
             HingeJoint {
               jointParameters HingeJointParameters {
-                axis 1.000000 0.000000 -0.000000
-                anchor 0.120000 0.000000 0.000000
+                axis 0.000000 -1.000000 -0.000000
+                anchor 0.000000 -0.140000 0.000000
               }
               device [
                 RotationalMotor {
@@ -413,12 +413,12 @@ PROTO dog_asm [
                 }
               ]
               endPoint Solid {
-                translation 0.120000 0.000000 0.000000
-                rotation 0.691516 0.208835 0.691516 2.729851
+                translation 0.000000 -0.140000 0.000000
+                rotation 1.000000 0.000000 0.000000 1.570800
                 children [
                   Shape {
                     appearance DEF LegUpLB_material PBRAppearance {
-                      baseColor 0.803920 0.584310 0.192160
+                      baseColor 0.792160 0.819610 0.933330
                       roughness 1.000000
                       metalness 0
                     }
@@ -428,8 +428,8 @@ PROTO dog_asm [
                   }
                   HingeJoint {
                     jointParameters HingeJointParameters {
-                      axis 0.000000 -0.000000 1.000000
-                      anchor 0.330000 0.000000 -0.015000
+                      axis 0.000000 0.000000 1.000000
+                      anchor 0.330000 0.000000 -0.035000
                     }
                     device [
                       RotationalMotor {
@@ -441,12 +441,11 @@ PROTO dog_asm [
                       }
                     ]
                     endPoint Solid {
-                      translation 0.330000 0.000000 -0.015000
-                      rotation 0.000000 0.000000 -1.000000 2.376100
+                      translation 0.330000 0.000000 -0.035000
                       children [
                         Shape {
                           appearance DEF LegDownLB_material PBRAppearance {
-                            baseColor 0.819610 0.701960 0.431370
+                            baseColor 0.792160 0.819610 0.933330
                             roughness 1.000000
                             metalness 0
                           }
@@ -473,7 +472,7 @@ PROTO dog_asm [
                             children [
                               Shape {
                                 appearance DEF WheelLB_material PBRAppearance {
-                                  baseColor 0.803920 0.584310 0.192160
+                                  baseColor 0.792160 0.819610 0.933330
                                   roughness 1.000000
                                   metalness 0
                                 }
@@ -490,7 +489,7 @@ PROTO dog_asm [
                               centerOfMass [ 0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
-                                6.776300e-21 -9.211500e-21 2.964600e-21
+                                -5.385000e-21 -8.891100e-21 -7.230400e-22
                               ]
                             }
                           }
@@ -504,7 +503,7 @@ PROTO dog_asm [
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
-                          5.344300e-09 -3.704300e-05 -1.217200e-11
+                          5.345300e-09 -3.704300e-05 -1.256600e-11
                         ]
                       }
                     }
@@ -515,7 +514,7 @@ PROTO dog_asm [
                 physics Physics {
                   density -1
                   mass 1.801500
-                  centerOfMass [ 0.140260 -0.000000 -0.029588 ]
+                  centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
                     2.321400e-10 1.041000e-04 2.082900e-11
@@ -529,17 +528,17 @@ PROTO dog_asm [
           physics Physics {
             density -1
             mass 0.713240
-            centerOfMass [ 0.001635 -0.000000 0.000941 ]
+            centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
-              1.027100e-03 9.852100e-04 8.053000e-04
-              3.836400e-10 1.097700e-06 -5.197500e-10
+              9.852100e-04 1.027100e-03 8.053000e-04
+              -3.857000e-10 -5.274300e-10 -1.097700e-06
             ]
           }
         }
       }
       HingeJoint {
         jointParameters HingeJointParameters {
-          axis -1.000000 0.000000 -0.000000
+          axis 1.000000 0.000000 0.000000
           anchor -0.296530 -0.090000 0.045000
         }
         device [
@@ -553,11 +552,12 @@ PROTO dog_asm [
         ]
         endPoint Solid {
           translation -0.296530 -0.090000 0.045000
-          rotation 0.592648 -0.545469 -0.592648 2.142884
+          # rotation 0.707105 0.000003 0.707108 3.141598
+          rotation 0.000000 -1.000000 0.000000 1.570800
           children [
             Shape {
               appearance DEF ShoulderRB_material PBRAppearance {
-                baseColor 0.819610 0.701960 0.431370
+                baseColor 0.792160 0.819610 0.933330
                 roughness 1.000000
                 metalness 0
               }
@@ -567,8 +567,8 @@ PROTO dog_asm [
             }
             HingeJoint {
               jointParameters HingeJointParameters {
-                axis 1.000000 -0.000000 -0.000000
-                anchor 0.120000 0.000000 0.000000
+                axis 0.000000 -1.000000 -0.000000
+                anchor 0.000000 -0.140000 0.000000
               }
               device [
                 RotationalMotor {
@@ -580,12 +580,12 @@ PROTO dog_asm [
                 }
               ]
               endPoint Solid {
-                translation 0.120000 0.000000 0.000000
-                rotation -0.687332 0.234842 -0.687332 2.680278
+                translation 0.000000 -0.140000 0.000000
+                rotation 0.000003 -0.707108 0.707105 3.141598
                 children [
                   Shape {
                     appearance DEF LegUpRB_material PBRAppearance {
-                      baseColor 0.803920 0.584310 0.192160
+                      baseColor 0.792160 0.819610 0.933330
                       roughness 1.000000
                       metalness 0
                     }
@@ -596,7 +596,7 @@ PROTO dog_asm [
                   HingeJoint {
                     jointParameters HingeJointParameters {
                       axis 0.000000 0.000000 1.000000
-                      anchor 0.330000 0.000000 -0.015000
+                      anchor 0.330000 0.000000 -0.035000
                     }
                     device [
                       RotationalMotor {
@@ -608,12 +608,11 @@ PROTO dog_asm [
                       }
                     ]
                     endPoint Solid {
-                      translation 0.330000 0.000000 -0.015000
-                      rotation 0.000000 0.000000 1.000000 2.104100
+                      translation 0.330000 0.000000 -0.035000
                       children [
                         Shape {
                           appearance DEF LegDownRB_material PBRAppearance {
-                            baseColor 0.819610 0.701960 0.431370
+                            baseColor 0.792160 0.819610 0.933330
                             roughness 1.000000
                             metalness 0
                           }
@@ -640,7 +639,7 @@ PROTO dog_asm [
                             children [
                               Shape {
                                 appearance DEF WheelRB_material PBRAppearance {
-                                  baseColor 0.803920 0.584310 0.192160
+                                  baseColor 0.792160 0.819610 0.933330
                                   roughness 1.000000
                                   metalness 0
                                 }
@@ -654,10 +653,10 @@ PROTO dog_asm [
                             physics Physics {
                               density -1
                               mass 0.327510
-                              centerOfMass [ 0.000000 0.000000 0.015169 ]
+                              centerOfMass [ -0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
-                                -2.710500e-19 -8.470300e-21 1.355300e-20
+                                -6.522300e-21 -8.891100e-21 -6.755200e-22
                               ]
                             }
                           }
@@ -671,7 +670,7 @@ PROTO dog_asm [
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
-                          5.320400e-09 -3.704300e-05 -1.037300e-11
+                          5.345300e-09 -3.704300e-05 -1.256600e-11
                         ]
                       }
                     }
@@ -682,7 +681,7 @@ PROTO dog_asm [
                 physics Physics {
                   density -1
                   mass 1.801500
-                  centerOfMass [ 0.140260 -0.000000 -0.029588 ]
+                  centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
                     2.321400e-10 1.041000e-04 2.082900e-11
@@ -695,18 +694,18 @@ PROTO dog_asm [
           boundingObject USE ShoulderRB
           physics Physics {
             density -1
-            mass 0.713250
-            centerOfMass [ 0.001635 0.000000 0.000941 ]
+            mass 0.713240
+            centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
-              1.027100e-03 9.852100e-04 8.053000e-04
-              3.722600e-10 1.097600e-06 -4.612800e-10
+              9.852100e-04 1.027100e-03 8.053000e-04
+              -3.857000e-10 -5.274300e-10 -1.097700e-06
             ]
           }
         }
       }
     ]
     name IS name
-    boundingObject USE base_link
+    boundingObject USE Body
     physics Physics {
       density -1
       mass 15.156000

@@ -1,2 +1,2 @@
 from urdf2webots.importer import convertUrdfFile
-convertUrdfFile(input = 'E:\\APPData\\WebotDoc\\Dogtest\\DogURDF\\dog_asm\\urdf\\dog_asm.urdf',output='E:\\APPData\\WebotDoc\\Dogtest\\DogURDF\\dog_asm.proto',boxCollision=True)
+convertUrdfFile(input = 'E:\\APPData\\WebotDoc\\Dogtest\\DogURDF\\dog_asm2\\urdf\\dog_asm2.urdf',output='E:\\APPData\\WebotDoc\\Dogtest\\DogURDF\\dog_asm2\\urdf\\dog_asm2.proto',boxCollision=True)

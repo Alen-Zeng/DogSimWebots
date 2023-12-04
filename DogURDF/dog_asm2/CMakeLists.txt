@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-project(dog_asm)
+project(dog_asm2)
 
 find_package(catkin REQUIRED)
 
