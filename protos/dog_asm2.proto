@@ -46,6 +46,8 @@ PROTO dog_asm2 [
           RotationalMotor {
             name "JShoulderLF"
             maxTorque 10000
+            maxPosition 1.57080
+            minPosition -0.34906
           }
           PositionSensor {
             name "JShoulderLF_sensor"
@@ -75,6 +77,8 @@ PROTO dog_asm2 [
                 RotationalMotor {
                   name "JLegUpLF"
                   maxTorque 10000
+                  maxPosition 3.14159
+                  minPosition -3.14158
                 }
                 PositionSensor {
                   name "JLegUpLF_sensor"
@@ -103,6 +107,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownLF"
                         maxTorque 10000
+                        maxPosition 2.61799
+                        minPosition -2.61799
                       }
                       PositionSensor {
                         name "JLegDownLF_sensor"
@@ -213,6 +219,8 @@ PROTO dog_asm2 [
           RotationalMotor {
             name "JShoulderRF"
             maxTorque 10000
+            maxPosition 0.34906
+            minPosition -1.57080
           }
           PositionSensor {
             name "JShoulderRF_sensor"
@@ -241,6 +249,8 @@ PROTO dog_asm2 [
                 RotationalMotor {
                   name "JLegUpRF"
                   maxTorque 10000
+                  maxPosition 3.14159
+                  minPosition -3.14158
                 }
                 PositionSensor {
                   name "JLegUpRF_sensor"
@@ -270,6 +280,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownRF"
                         maxTorque 10000
+                        maxPosition 2.61799
+                        minPosition -2.61799
                       }
                       PositionSensor {
                         name "JLegDownRF_sensor"
@@ -380,6 +392,8 @@ PROTO dog_asm2 [
           RotationalMotor {
             name "JShoulderLB"
             maxTorque 10000
+            maxPosition 0.34906
+            minPosition -1.57080
           }
           PositionSensor {
             name "JShoulderLB_sensor"
@@ -408,6 +422,8 @@ PROTO dog_asm2 [
                 RotationalMotor {
                   name "JLegUpLB"
                   maxTorque 10000
+                  maxPosition 3.14159
+                  minPosition -3.14158
                 }
                 PositionSensor {
                   name "JLegUpLB_sensor"
@@ -436,6 +452,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownLB"
                         maxTorque 10000
+                        maxPosition 2.61799
+                        minPosition -2.61799
                       }
                       PositionSensor {
                         name "JLegDownLB_sensor"
@@ -547,6 +565,8 @@ PROTO dog_asm2 [
           RotationalMotor {
             name "JShoulderRB"
             maxTorque 10000
+            maxPosition 1.57080
+            minPosition -0.34906
           }
           PositionSensor {
             name "JShoulderRB_sensor"
@@ -576,6 +596,8 @@ PROTO dog_asm2 [
                 RotationalMotor {
                   name "JLegUpRB"
                   maxTorque 10000
+                  maxPosition 3.14159
+                  minPosition -3.14158
                 }
                 PositionSensor {
                   name "JLegUpRB_sensor"
@@ -604,6 +626,8 @@ PROTO dog_asm2 [
                       RotationalMotor {
                         name "JLegDownRB"
                         maxTorque 10000
+                        maxPosition 2.61799
+                        minPosition -2.61799
                       }
                       PositionSensor {
                         name "JLegDownRB_sensor"

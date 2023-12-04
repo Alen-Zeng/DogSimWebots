@@ -38,24 +38,13 @@ int main(int argc, char **argv) {
   // Main loop:
   // - perform simulation steps until Webots is stopping the controller
   while (robot->step(timeStep) != -1) {
-    // Read the sensors:
-    // Enter here functions to read sensor data, like:
-    //  double val = ds->getValue();
-    // Legs[Wheel][LF]->setVelocity(10);
-    // Legs[Wheel][LF]->setPosition(postest);
-    // Legs[Wheel][RF]->setVelocity(10);
-    // Legs[Wheel][RF]->setPosition(-postest);
-    // Legs[Wheel][LB]->setVelocity(10);
-    // Legs[Wheel][LB]->setPosition(postest);
-    // Legs[Wheel][RB]->setVelocity(10);
-    // Legs[Wheel][RB]->setPosition(-postest);
-    std::cout << LegsPos[Shoulder][LF]->getValue() << std::endl;
-    Legs[Shoulder][LF]->setPosition(postest);
-    std::cout << LegsPos[Shoulder][RF]->getValue() << std::endl;
-    Legs[Shoulder][RF]->setPosition(postest);
-    postest += 1;
+    Legs[LegDown][LB]->setPosition(postest);
+    Legs[LegDown][RB]->setPosition(postest);
+    Legs[LegDown][LF]->setPosition(postest);
+    Legs[LegDown][RF]->setPosition(postest);
 
-    // Process sensor data here.
+    postest -= 0.001;
+
 
   };
 

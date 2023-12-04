@@ -21,17 +21,17 @@ enum DirEnumdef
   RB
 };
 
-// class DogLeg
-// {
-// public:
-//   double ShoulderPosition;
-//   double LegUpPosition;
-//   double LegDownPosition;
-//   double WheelPosition;
+class DogLeg
+{
+public:
+  double ShoulderPosition;
+  double LegUpPosition;
+  double LegDownPosition;
+  double WheelPosition;
 
-//   DogLeg(/* args */){};
-//   ~DogLeg(){};
-// };
+  DogLeg(/* args */){};
+  ~DogLeg(){};
+};
 
 
 /* -------- function declarations --------------------------------------------*/

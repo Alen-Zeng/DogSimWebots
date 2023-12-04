@@ -42,13 +42,18 @@ void DogLegInit(webots::Robot *(&robot),webots::Motor* (&leg)[4][4],webots::Posi
   {
     for (size_t j = 0; j < 4; j++)
     {
-      leg[i][j]->setVelocity(0.1);
-      // leg[i][j]->setPosition(0);
-      // leg[i][j]->setTorque(10);
+      leg[i][j]->setVelocity(1);
+      leg[i][j]->enableTorqueFeedback(timeStep);
+      leg[i][j]->enableForceFeedback(timeStep);
     }
   }
-  /* 获取关节位置传感器 */
-  posSensor[Shoulder][LF] = robot->getPositionSensor("JShoulderLF_sensor");
+  for (size_t i = 0; i < 4; i++)
+  {
+    leg[Wheel][i]->setTorque(0);
+  }
+
+    /* 获取关节位置传感器 */
+    posSensor[Shoulder][LF] = robot->getPositionSensor("JShoulderLF_sensor");
   posSensor[Shoulder][RF] = robot->getPositionSensor("JShoulderRF_sensor");
   posSensor[Shoulder][LB] = robot->getPositionSensor("JShoulderLB_sensor");
   posSensor[Shoulder][RB] = robot->getPositionSensor("JShoulderRB_sensor");
