@@ -3,6 +3,7 @@
 #include <webots/Robot.hpp>
 #include <webots/Motor.hpp>
 #include <webots/PositionSensor.hpp>
+#include <webots/InertialUnit.hpp>
 /* Types ---------------------------------------------------------------------*/
 enum class JointEnumdef
 {
@@ -19,7 +20,7 @@ enum class DirEnumdef
   RB
 };
 
-class DogLeg
+class DogLegClassdef
 {
 public:
   webots::Motor *LegJoint[4];
@@ -35,22 +36,37 @@ public:
   bool PositiveFold = true; // 逆解算LegDown正褶
   double LegHeight;         // 狗腿高度
 
-  DogLeg(/* args */){};
-  ~DogLeg(){};
+  DogLegClassdef(/* args */){};
+  ~DogLegClassdef(){};
 
   bool Reset(double shoulder, double legup, double legdown);
   void SetHeight(double height);
   void SetWheelVelocity(double velocity);
 };
 
+class DogClassdef
+{
+private:
+  /* data */
+public:
+  DogLegClassdef Legs[4];
+  webots::InertialUnit *IMU;
+  double IMU_Quaternion[4]; //xyzw
+
+  void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4],webots::InertialUnit *imu);
+  void IMUUpdate();
+
+  DogClassdef(/* args */){};
+  ~DogClassdef(){};
+};
+
 
 /* Macros --------------------------------------------------------------------*/
 int timeStep; /* 仿真周期 */
-DogLeg Legs[4];
 #ifndef PI
 #define PI 3.14159265358979
 #endif
-
+DogClassdef Dog;
 /* Function declarations -----------------------------------------------------*/
 
 #ifndef Radians
@@ -74,12 +90,8 @@ const T &abs(const T &input)
  * @param legup 
  * @param legdown 
  */
-bool DogLeg::Reset(double shoulder, double legup, double legdown)
+bool DogLegClassdef::Reset(double shoulder, double legup, double legdown)
 {
-  // std::cout << LegPosSensor[0]->getName() << std::endl;
-  // std::cout << abs(JointPosition[(int)JointEnumdef::Shoulder] - shoulder) << std::endl;
-  // std::cout << abs(JointPosition[(int)JointEnumdef::LegUp] - legup) << std::endl;
-  // std::cout << abs(JointPosition[(int)JointEnumdef::LegDown] - legdown) << std::endl;
   if (abs(JointPosition[(int)JointEnumdef::Shoulder] - shoulder) > 0.0001 || abs(JointPosition[(int)JointEnumdef::LegUp] - legup) > 0.0001 || abs(JointPosition[(int)JointEnumdef::LegDown] - legdown) > 0.0001)
   {
     for (auto j : LegJoint)
@@ -115,4 +127,9 @@ bool DogLeg::Reset(double shoulder, double legup, double legdown)
     return true;
   }
   return false;
+}
+
+void DogClassdef::IMUUpdate()
+{
+
 }

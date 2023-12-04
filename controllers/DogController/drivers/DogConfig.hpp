@@ -18,7 +18,7 @@
  * @param timestep 仿真周期
  * @param legs 
  */
-void DogInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
+void DogClassdef::DogInit(int timestep,webots::Robot *(&robot),DogLegClassdef legs[4],webots::InertialUnit *imu)
 {
   /* 获取关节电机 */
   legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Shoulder]=robot->getMotor("JShoulderLF");
@@ -88,7 +88,19 @@ void DogInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
     }
   }
   std::cout << "Position Sensors Initialized" << std::endl;
-  
+
+  /* 获取IMU */
+  imu = robot->getInertialUnit("IMU");
+  imu->enable(timestep);
+  if (robot->step(timestep) != -1)
+  {
+    for (int i = 0; i < 4; i++)
+    {
+      IMU_Quaternion[i] = imu->getQuaternion()[i];
+    }
+  }
+  std::cout << "IMU Initialized" << std::endl;
+
   /* 记录关节限位 */
   legs[(int)DirEnumdef::LF].ShoulderScope[0] = 1.57080;
   legs[(int)DirEnumdef::LF].ShoulderScope[1] = -0.34906;
@@ -119,6 +131,7 @@ void DogInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
   legs[(int)DirEnumdef::RB].LegDownScope[1] = -2.61799;
 
   /* 关节复位 */
+  std::cout << "Legs Reseting" << std::endl;
   while ((!legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140)) 
       || !legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140)) 
       || !legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140)) 
@@ -129,7 +142,6 @@ void DogInit(int timestep,webots::Robot *(&robot),DogLeg legs[4])
         legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140));
         legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140));
         legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140));
-      std::cout << "Legs Reseting" << std::endl;
       }
   std::cout << "Legs Reset" << std::endl;
 
