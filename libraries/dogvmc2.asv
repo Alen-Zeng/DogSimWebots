@@ -97,13 +97,47 @@ Jlf=[-L1*cos(O0)-L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)-L*cos
      -L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0;
      L*sin(O0+O1+O2),0,-L*cos(O0+O1+O2),1,0;
      0,s*sin(O3+O4)-Lt*cos(O3),0,0,1;
-     ,s*sin(),,,1];
+     0,s*sin(O3+O4),0,0,1];
 
+Jrf=[-L1*cos(O0)-L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0;
+     -L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0;
+     L*sin(O0+O1+O2),0,-L*cos(O0+O1+O2),1,0;
+     0,-s*sin(O3+O4)-Lt*cos(O3),0,0,1;
+     0,-s*sin(O3+O4),0,0,1];
 
+Jlb=[-L1*cos(O0)-L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L*sin(O0+O1+O2),0,+L*cos(O0+O1+O2),1,0;
+     0,s*sin(O3+O4)-Lt*cos(O3),0,0,1;
+     0,s*sin(O3+O4),0,0,1];
 
+Jrb=[-L1*cos(O0)-L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L*sin(O0+O1+O2),0,+L*cos(O0+O1+O2),1,0;
+     0,-s*sin(O3+O4)-Lt*cos(O3),0,0,1;
+     0,-s*sin(O3+O4),0,0,1];
 
-
-
+Jtotal=[-L1*cos(O0)-L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+     -L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+     L*sin(O0+O1+O2),0,-L*cos(O0+O1+O2),1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+     0,s*sin(O3+O4)-Lt*cos(O3),0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+     0,s*sin(O3+O4),0,0,1;
+0,0,0,0,0,-L1*cos(O0)-L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0;
+     0,0,0,0,0,-L2*cos(O0+O1)+L*sin(O0+O1+O2),0,-L2*sin(O0+O1)-L*cos(O0+O1+O2),1,0;
+     0,0,0,0,0,L*sin(O0+O1+O2),0,-L*cos(O0+O1+O2),1,0;
+     0,0,0,0,0,0,-s*sin(O3+O4)-Lt*cos(O3),0,0,1;
+     0,0,0,0,0,0,-s*sin(O3+O4),0,0,1;
+     -L1*cos(O0)-L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L*sin(O0+O1+O2),0,+L*cos(O0+O1+O2),1,0;
+     0,s*sin(O3+O4)-Lt*cos(O3),0,0,1;
+     0,s*sin(O3+O4),0,0,1;
+     -L1*cos(O0)-L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L1*sin(O0)-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L2*cos(O0+O1)-L*sin(O0+O1+O2),0,-L2*sin(O0+O1)+L*cos(O0+O1+O2),1,0;
+     -L*sin(O0+O1+O2),0,+L*cos(O0+O1+O2),1,0;
+     0,-s*sin(O3+O4)-Lt*cos(O3),0,0,1;
+     0,-s*sin(O3+O4),0,0,1
+    ];
 
 
 
