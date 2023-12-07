@@ -27,6 +27,7 @@ public:
   webots::PositionSensor *LegPosSensor[4];
   /* 关节信息 */
   double JointPosition[4];
+  double JointTorque[4];
   double WheelVelocity;
   /* 关节限位MAX-MIN */
   double ShoulderScope[2];
@@ -42,6 +43,8 @@ public:
   bool Reset(double shoulder, double legup, double legdown);
   void SetHeight(double height);
   void SetWheelVelocity(double velocity);
+  void SetTorque(double shoulderTor, double legupTor, double legdownTor);
+  void SetTorque(double shoulderTor, double legupTor, double legdownTor, double wheelTor);
 };
 
 class DogClassdef
