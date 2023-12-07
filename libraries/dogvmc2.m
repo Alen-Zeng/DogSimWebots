@@ -63,10 +63,10 @@ Ltrb=L1*cos(O0rb) + L2*cos(O0rb+O1rb);
 % Rr=-L1*cos(O0rb)-L2*cos(O0rb+O1rb)-L*sin(O0rb+O1rb+O2rb);
 % Sl=-L1*sin(O0lb)-L2*sin(O0lb+O1lb)+L*cos(O0lb+O1lb+O2lb);
 % Sr=-L1*sin(O0rb)-L2*sin(O0rb+O1rb)+L*cos(O0rb+O1rb+O2rb);
-% Uf=s*sin(O3lf+O4lf)-Lt*cos(O3lf);
-% Ub=s*sin(O3lb+O4lb)-Lt*cos(O3lb);
-% Wf=-s*sin(O3rf+O4rf)-Lt*cos(O3rf);
-% Wb=-s*sin(O3rb+O4rb)-Lt*cos(O3rb);
+% Uf=s*sin(O3lf+O4lf)-Ltlf*cos(O3lf);
+% Ub=s*sin(O3lb+O4lb)-Ltlb*cos(O3lb);
+% Wf=-s*sin(O3rf+O4rf)-Ltrf*cos(O3rf);
+% Wb=-s*sin(O3rb+O4rb)-Ltrb*cos(O3rb);
 
 T=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0;
    0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0;
@@ -155,6 +155,6 @@ Jtotal=[
      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,-s*sin(O3rb+O4rb)-Lt*cos(O3rb),0,0,1;
      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,-s*sin(O3rb+O4rb),0,0,1];
 
-Jtotal*K
+H=Jtotal*K
 
 

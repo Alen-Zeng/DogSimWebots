@@ -1,9 +1,9 @@
 #pragma once
 /* Includes ------------------------------------------------------------------*/
-#include <webots/Robot.hpp>
+#include <webots/InertialUnit.hpp>
 #include <webots/Motor.hpp>
 #include <webots/PositionSensor.hpp>
-#include <webots/InertialUnit.hpp>
+#include <webots/Robot.hpp>
 /* Types ---------------------------------------------------------------------*/
 enum class JointEnumdef
 {
