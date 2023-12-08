@@ -70,7 +70,7 @@ int timeStep; /* 仿真周期 */
 #ifndef PI
 #define PI 3.14159265358979
 #endif
-Spring_Damper SDParam;
+Spring_Damper SDParam={0};
 DogClassdef Dog;
 /* Function declarations -----------------------------------------------------*/
 

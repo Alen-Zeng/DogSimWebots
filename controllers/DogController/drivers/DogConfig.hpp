@@ -147,7 +147,7 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
       }
   std::cout << "Legs Reset" << std::endl;
 
-  /* 初始化弹簧阻尼器参数 */
+  /* 初始化弹簧阻尼器参数,其他参数先暂时通过结构体初始化为0 */
   sdpara.Kx = 0;
   sdpara.Ky = 0;
   sdpara.Kz = 0;

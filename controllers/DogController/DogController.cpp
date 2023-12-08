@@ -17,10 +17,10 @@ int main(int argc, char **argv)
 
   // get the time step of the current world.
   timeStep = (int)robot->getBasicTimeStep();
-  Dog.DogInit(timeStep, robot, Dog.Legs,Dog.IMU);
+  Dog.DogInit(timeStep, robot, Dog.Legs,Dog.IMU,SDParam);
 
   while (robot->step(timeStep) != -1) {
-
+    
 
   };
 
