@@ -133,7 +133,7 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   
   lfTorque[(int)JointEnumdef::LegDown] = -torMat(1, 0);
   lfTorque[(int)JointEnumdef::LegUp] = -torMat(2, 0);
-  lfTorque[(int)JointEnumdef::Shoulder] = -torMat(4, 0);
+  lfTorque[(int)JointEnumdef::Shoulder] = torMat(4, 0);
   rfTorque[(int)JointEnumdef::LegDown] = torMat(1+5, 0);
   rfTorque[(int)JointEnumdef::LegUp] = torMat(2+5, 0);
   rfTorque[(int)JointEnumdef::Shoulder] = torMat(4+5, 0);
@@ -142,7 +142,7 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   lbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+10, 0);
   rbTorque[(int)JointEnumdef::LegDown] = torMat(1+15, 0);
   rbTorque[(int)JointEnumdef::LegUp] = torMat(2+15, 0);
-  rbTorque[(int)JointEnumdef::Shoulder] = torMat(4+15, 0);
+  rbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+15, 0);
 
   std::cout << "tormat: " << torMat << std::endl;
 }

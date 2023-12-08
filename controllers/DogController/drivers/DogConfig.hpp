@@ -138,16 +138,16 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
 
   /* 关节复位 */
   std::cout << "Legs Reseting" << std::endl;
-  while ((!legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140)) 
-      || !legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140)) 
-      || !legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140)) 
-      || !legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140)))
+  while ((!legs[(int)DirEnumdef::LF].Reset(Radians(0), Radians(60), Radians(-140)) 
+       || !legs[(int)DirEnumdef::RF].Reset(Radians(0), Radians(-60), Radians(140)) 
+       || !legs[(int)DirEnumdef::LB].Reset(Radians(0), Radians(60), Radians(-140)) 
+       || !legs[(int)DirEnumdef::RB].Reset(Radians(0), Radians(-60), Radians(140)))
       && robot->step(timestep) != -1)
       {
-        legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140));
-        legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140));
-        legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140));
-        legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140));
+        legs[(int)DirEnumdef::LF].Reset(Radians(0), Radians(60), Radians(-140));
+        legs[(int)DirEnumdef::RF].Reset(Radians(0), Radians(-60), Radians(140));
+        legs[(int)DirEnumdef::LB].Reset(Radians(0), Radians(60), Radians(-140));
+        legs[(int)DirEnumdef::RB].Reset(Radians(0), Radians(-60), Radians(140));
       }
   std::cout << "Legs Reset" << std::endl;
 
