@@ -4,6 +4,7 @@
 #include <webots/Motor.hpp>
 #include <webots/PositionSensor.hpp>
 #include <webots/Robot.hpp>
+#include <algorithm/vmc.hpp>
 /* Types ---------------------------------------------------------------------*/
 enum class JointEnumdef
 {
@@ -56,7 +57,7 @@ public:
   webots::InertialUnit *IMU;
   double IMU_Quaternion[4]; //xyzw
 
-  void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4],webots::InertialUnit *imu);
+  void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4], webots::InertialUnit *imu, Spring_Damper &sdpara);
   void IMUUpdate();
 
   DogClassdef(/* args */){};
@@ -69,6 +70,7 @@ int timeStep; /* 仿真周期 */
 #ifndef PI
 #define PI 3.14159265358979
 #endif
+Spring_Damper SDParam;
 DogClassdef Dog;
 /* Function declarations -----------------------------------------------------*/
 

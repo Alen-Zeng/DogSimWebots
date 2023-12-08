@@ -17,8 +17,10 @@
  * 
  * @param timestep 仿真周期
  * @param legs 
+ * @param imu 
+ * @param sdpara 弹簧阻尼器参数
  */
-void DogClassdef::DogInit(int timestep,webots::Robot *(&robot),DogLegClassdef legs[4],webots::InertialUnit *imu)
+void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4], webots::InertialUnit *imu, Spring_Damper &sdpara)
 {
   /* 获取关节电机 */
   legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Shoulder]=robot->getMotor("JShoulderLF");
@@ -144,6 +146,18 @@ void DogClassdef::DogInit(int timestep,webots::Robot *(&robot),DogLegClassdef le
         legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140));
       }
   std::cout << "Legs Reset" << std::endl;
+
+  /* 初始化弹簧阻尼器参数 */
+  sdpara.Kx = 0;
+  sdpara.Ky = 0;
+  sdpara.Kz = 0;
+  sdpara.Kalpha = 1;
+  sdpara.Kbeta = 1;
+  sdpara.Bx = 0;
+  sdpara.By = 0;
+  sdpara.Bz = 0;
+  sdpara.Balpha = 0;
+  sdpara.Bbeta = 0;
 
   std::cout << "All Initialized" << std::endl;
 }

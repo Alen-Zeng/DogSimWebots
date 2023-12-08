@@ -1,18 +1,30 @@
 #pragma once
 /* Includes ------------------------------------------------------------------*/
 #include <../../libraries/eigen/Eigen/Eigen>
-#include <bind.hpp>
 #include <cmath>
 /* Private macros ------------------------------------------------------------*/
 static Eigen::MatrixXd H(20, 5);
 static Eigen::MatrixXd Fs(5, 1);
 static double L, L1, L2, s;
+static double errorMin = 0.001;
 /* Private type --------------------------------------------------------------*/
-
+namespace vmcspace
+{
+  template <typename T>
+  const T &abs(const T &input)
+  {
+    return input < (T)0 ? -input : input;
+  }
+}
 /* Exported macros -----------------------------------------------------------*/
 
 /* Exported types ------------------------------------------------------------*/
-typedef struct Spring_Damper
+
+/**
+ * @brief 弹簧阻尼器参数
+ * 
+ */
+typedef struct _Spring_Damper
 {
   double xd;
   double yd;
@@ -24,26 +36,26 @@ typedef struct Spring_Damper
   double zcurr;
   double alphacurr;
   double betacurr;
-  double diffxd;
-  double diffyd;
-  double diffzd;
-  double diffalphad;
-  double diffbetad;
-  double diffxcurr;
-  double diffycurr;
-  double diffzcurr;
-  double diffalphacurr;
-  double diffbetacurr;
-  double Kx;
-  double Ky;
-  double Kz;
-  double Kalpha;
-  double Kbeta;
-  double Bx;
-  double By;
-  double Bz;
-  double Balpha;
-  double Bbeta;
+  double diffxd;        // 目标速度旋量
+  double diffyd;        // 目标速度旋量
+  double diffzd;        // 目标速度旋量
+  double diffalphad;    // 目标速度旋量
+  double diffbetad;     // 目标速度旋量
+  double diffxcurr;     // 当前速度旋量
+  double diffycurr;     // 当前速度旋量
+  double diffzcurr;     // 当前速度旋量
+  double diffalphacurr; // 当前速度旋量
+  double diffbetacurr;  // 当前速度旋量
+  double Kx;            // 弹簧参数
+  double Ky;            // 弹簧参数
+  double Kz;            // 弹簧参数
+  double Kalpha;        // 弹簧参数
+  double Kbeta;         // 弹簧参数
+  double Bx;            // 阻尼器参数
+  double By;            // 阻尼器参数
+  double Bz;            // 阻尼器参数
+  double Balpha;        // 阻尼器参数
+  double Bbeta;         // 阻尼器参数
 }Spring_Damper;
 /* Exported function declarations --------------------------------------------*/
 
@@ -139,8 +151,16 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   BMat(2, 2) = sdPara.Bz;
   BMat(3, 3) = sdPara.Balpha;
   BMat(4, 4) = sdPara.Bbeta;
-  Pose << sdPara.xd - sdPara.xcurr, sdPara.yd - sdPara.ycurr, sdPara.zd - sdPara.zcurr, sdPara.alphad - sdPara.alphacurr, sdPara.betad - sdPara.betacurr;
-  Veloc << sdPara.diffxd - sdPara.diffxcurr, sdPara.diffyd - sdPara.diffycurr, sdPara.diffzd - sdPara.diffzcurr, sdPara.diffalphad - sdPara.diffalphacurr, sdPara.diffbetad - sdPara.diffbetacurr;
+  Pose << (vmcspace::abs(sdPara.xd - sdPara.xcurr) > errorMin ? sdPara.xd - sdPara.xcurr : 0),
+          (vmcspace::abs(sdPara.yd - sdPara.ycurr) > errorMin ? sdPara.yd - sdPara.ycurr : 0),
+          (vmcspace::abs(sdPara.zd - sdPara.zcurr) > errorMin ? sdPara.zd - sdPara.zcurr : 0),
+          (vmcspace::abs(sdPara.alphad - sdPara.alphacurr) > errorMin ? sdPara.alphad - sdPara.alphacurr : 0),
+          (vmcspace::abs(sdPara.betad - sdPara.betacurr) > errorMin ? sdPara.betad - sdPara.betacurr : 0);
+  Veloc << (vmcspace::abs(sdPara.diffxd - sdPara.diffxcurr) > errorMin ? sdPara.diffxd - sdPara.diffxcurr : 0),
+           (vmcspace::abs(sdPara.diffyd - sdPara.diffycurr) > errorMin ? sdPara.diffyd - sdPara.diffycurr : 0),
+           (vmcspace::abs(sdPara.diffzd - sdPara.diffzcurr) > errorMin ? sdPara.diffzd - sdPara.diffzcurr : 0),
+           (vmcspace::abs(sdPara.diffalphad - sdPara.diffalphacurr) > errorMin ? sdPara.diffalphad - sdPara.diffalphacurr : 0),
+           (vmcspace::abs(sdPara.diffbetad - sdPara.diffbetacurr) > errorMin ? sdPara.diffbetad - sdPara.diffbetacurr : 0);
 
   _F = KMat * Pose + BMat * Veloc;
 
