@@ -3,10 +3,10 @@
 #include <../../libraries/eigen/Eigen/Eigen>
 #include <cmath>
 /* Private macros ------------------------------------------------------------*/
-static Eigen::MatrixXd H(20, 5);
-static Eigen::MatrixXd Fs(5, 1);
-static double L, L1, L2, s;
-static double errorMin = 0.001;
+Eigen::MatrixXd H(20, 5);
+Eigen::MatrixXd Fs(5, 1);
+static const double L, L1, L2, s;/* TODO */
+static const double errorMin = 0.001;
 /* Private type --------------------------------------------------------------*/
 namespace vmcspace
 {
@@ -165,12 +165,19 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   _F = KMat * Pose + BMat * Veloc;
 
   torMat = _H * _F;
-  for (size_t t = 0; t < 4; t++)
-  {
-    lfTorque[t] = torMat(t, 0);
-    rfTorque[t] = torMat(t + 4, 0);
-    lbTorque[t] = torMat(t + 8, 0);
-    rfTorque[t] = torMat(t + 12, 0);
-  }
+  
+  lfTorque[(int)JointEnumdef::LegDown] = torMat(1, 0);
+  lfTorque[(int)JointEnumdef::LegUp] = torMat(2, 0);
+  lfTorque[(int)JointEnumdef::Shoulder] = torMat(4, 0);
+  rfTorque[(int)JointEnumdef::LegDown] = torMat(1+5, 0);
+  rfTorque[(int)JointEnumdef::LegUp] = torMat(2+5, 0);
+  rfTorque[(int)JointEnumdef::Shoulder] = torMat(4+5, 0);
+  lbTorque[(int)JointEnumdef::LegDown] = torMat(1+10, 0);
+  lbTorque[(int)JointEnumdef::LegUp] = torMat(2+10, 0);
+  lbTorque[(int)JointEnumdef::Shoulder] = torMat(4+10, 0);
+  rbTorque[(int)JointEnumdef::LegDown] = torMat(1+15, 0);
+  rbTorque[(int)JointEnumdef::LegUp] = torMat(2+15, 0);
+  rbTorque[(int)JointEnumdef::Shoulder] = torMat(4+15, 0);
+  
 }
 
