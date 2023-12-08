@@ -1,6 +1,6 @@
 #pragma once
 /* Includes ------------------------------------------------------------------*/
-#include <../libraries/eigen/Eigen/Eigen>
+#include <../../libraries/eigen/Eigen/Eigen>
 #include <bind.hpp>
 #include <cmath>
 /* Private macros ------------------------------------------------------------*/
@@ -12,7 +12,39 @@ static double L, L1, L2, s;
 /* Exported macros -----------------------------------------------------------*/
 
 /* Exported types ------------------------------------------------------------*/
-
+typedef struct Spring_Damper
+{
+  double xd;
+  double yd;
+  double zd;
+  double alphad;
+  double betad;
+  double xcurr;
+  double ycurr;
+  double zcurr;
+  double alphacurr;
+  double betacurr;
+  double diffxd;
+  double diffyd;
+  double diffzd;
+  double diffalphad;
+  double diffbetad;
+  double diffxcurr;
+  double diffycurr;
+  double diffzcurr;
+  double diffalphacurr;
+  double diffbetacurr;
+  double Kx;
+  double Ky;
+  double Kz;
+  double Kalpha;
+  double Kbeta;
+  double Bx;
+  double By;
+  double Bz;
+  double Balpha;
+  double Bbeta;
+}Spring_Damper;
 /* Exported function declarations --------------------------------------------*/
 
 /**
@@ -79,6 +111,9 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
 }
 
 
+
+
+
 /**
  * @brief 力矩计算
  *
@@ -88,10 +123,26 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
  * @param lbTorque
  * @param rfTorque
  */
-void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, double Kx, double Ky, double Kz, double Kalpha, double Kbeta, double Bx, double By, double Bz, double Balpha, double Bbeta, double lfTorque[4], double rfTorque[4], double lbTorque[4], double rbTorque[4])
+void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damper &sdPara, double lfTorque[4], double rfTorque[4], double lbTorque[4], double rbTorque[4])
 {
   static Eigen::MatrixXd torMat(20, 1);
 
+  static Eigen::MatrixXd KMat = Eigen::MatrixXd::Zero(5, 5), BMat = Eigen::MatrixXd::Zero(5, 5), Pose(5, 1), Veloc(5, 1);
+
+  KMat(0, 0) = sdPara.Kx;
+  KMat(1, 1) = sdPara.Ky;
+  KMat(2, 2) = sdPara.Kz;
+  KMat(3, 3) = sdPara.Kalpha;
+  KMat(4, 4) = sdPara.Kbeta;
+  BMat(0, 0) = sdPara.Bx;
+  BMat(1, 1) = sdPara.By;
+  BMat(2, 2) = sdPara.Bz;
+  BMat(3, 3) = sdPara.Balpha;
+  BMat(4, 4) = sdPara.Bbeta;
+  Pose << sdPara.xd - sdPara.xcurr, sdPara.yd - sdPara.ycurr, sdPara.zd - sdPara.zcurr, sdPara.alphad - sdPara.alphacurr, sdPara.betad - sdPara.betacurr;
+  Veloc << sdPara.diffxd - sdPara.diffxcurr, sdPara.diffyd - sdPara.diffycurr, sdPara.diffzd - sdPara.diffzcurr, sdPara.diffalphad - sdPara.diffalphacurr, sdPara.diffbetad - sdPara.diffbetacurr;
+
+  _F = KMat * Pose + BMat * Veloc;
 
   torMat = _H * _F;
   for (size_t t = 0; t < 4; t++)
