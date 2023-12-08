@@ -66,8 +66,8 @@ public:
   webots::PositionSensor *LegPosSensor[4];  //关节位置传感器
   /* 关节信息 */
   double JointPosition[4];
-  double JointTorque[4];
   double WheelVelocity;
+  double JointTargetTorque[4];
   /* 关节限位MAX-MIN */
   double ShoulderScope[2];
   double LegUpScope[2];

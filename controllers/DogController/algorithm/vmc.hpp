@@ -144,6 +144,6 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   rbTorque[(int)JointEnumdef::LegUp] = torMat(2+15, 0);
   rbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+15, 0);
 
-  std::cout << "tormat: " << torMat << std::endl;
+  // std::cout << "tormat: " << torMat << std::endl;
 }
 
