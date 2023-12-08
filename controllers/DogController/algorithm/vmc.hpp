@@ -5,6 +5,7 @@
 #include <cmath>
 /* Private macros ------------------------------------------------------------*/
 static Eigen::MatrixXd H(20, 5);
+static Eigen::MatrixXd Fs(5, 1);
 static double L, L1, L2, s;
 /* Private type --------------------------------------------------------------*/
 
@@ -14,10 +15,28 @@ static double L, L1, L2, s;
 
 /* Exported function declarations --------------------------------------------*/
 
-void MatrixHInit(Eigen::MatrixXd &_H, const double O0lf, const double O1lf, const double O2lf, const double O3lf, const double O4lf, const double O0rf, const double O1rf, const double O2rf, const double O3rf, const double O4rf, const double O0lb, const double O1lb, const double O2lb, const double O3lb, const double O4lb, const double O0rb, const double O1rb, const double O2rb, const double O3rb, const double O4rb)
+/**
+ * @brief 映射矩阵内容初始化
+ * 
+ * @param _H 映射矩阵
+ * @param alpha pitch偏角
+ * @param beta roll偏角
+ */
+void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, const double O1lf, const double O2lf, const double O4lf, const double O1rf, const double O2rf, const double O4rf, const double O1lb, const double O2lb, const double O4lb, const double O1rb, const double O2rb, const double O4rb)
 {
   static double Ltlf, Ltrf, Ltlb, Ltrb;
   static double Pl, Pr, Ql, Qr, Rl, Sl, Rr, Sr, Uf, Wf, Ub, Wb;
+  static double O0lf, O0rf, O0lb, O0rb;
+  static double O3lf, O3rf, O3lb, O3rb;
+
+  O0lf = alpha - O1lf - O2lf;
+  O0rf = alpha - O1rf - O2rf;
+  O0lb = alpha - O1lb - O2lb;
+  O0rb = alpha - O1rb - O2rb;
+  O3lf = beta - O4lf;
+  O3rf = beta - O4rf;
+  O3lb = beta - O4lb;
+  O3rb = beta - O4rb;
 
   Ltlf = L1 * cos(O0lf) + L2 * cos(O0lf + O1lf);
   Ltrf = L1 * cos(O0rf) + L2 * cos(O0rf + O1rf);
@@ -59,5 +78,28 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double O0lf, const double O1lf, cons
                                                                                                                                                                                                                                                                                                                                       0,                    (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf) + (Ub*Uf*Wf*s*sin(O3rb + O4rb))/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                                                                                                                                                                                               0,                                                                                                                                                                                                                                                                                                                                                                                           0,                    (Ub*Uf*Wb + Ub*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf + 2*Ub*Wb*Wf - 2*Uf*Wb*Wf) + (s*sin(O3rb + O4rb)*(Ub*Uf + Ub*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf + 2*Ub*Wb*Wf - 2*Uf*Wb*Wf);
 }
 
-// void TorqueCalculate(Eigen::MatrixXd &_H,)
+
+/**
+ * @brief 力矩计算
+ *
+ * @param _H
+ * @param lfTorque
+ * @param rfTorque
+ * @param lbTorque
+ * @param rfTorque
+ */
+void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, double Kx, double Ky, double Kz, double Kalpha, double Kbeta, double Bx, double By, double Bz, double Balpha, double Bbeta, double lfTorque[4], double rfTorque[4], double lbTorque[4], double rbTorque[4])
+{
+  static Eigen::MatrixXd torMat(20, 1);
+
+
+  torMat = _H * _F;
+  for (size_t t = 0; t < 4; t++)
+  {
+    lfTorque[t] = torMat(t, 0);
+    rfTorque[t] = torMat(t + 4, 0);
+    lbTorque[t] = torMat(t + 8, 0);
+    rfTorque[t] = torMat(t + 12, 0);
+  }
+}
 
