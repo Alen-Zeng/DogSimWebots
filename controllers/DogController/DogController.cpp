@@ -9,6 +9,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include <bind.hpp>
 #include <drivers/DogConfig.hpp>
+#include <algorithm/vmc.hpp>
+
 
 int main(int argc, char **argv)
 {
@@ -20,14 +22,19 @@ int main(int argc, char **argv)
   Dog.DogInit(timeStep, robot, Dog.Legs,Dog.IMU,SDParam);
 
   while (robot->step(timeStep) != -1) {
-    SDParam.alphacurr = Dog.IMU->getRollPitchYaw()[1];
-    SDParam.betacurr = Dog.IMU->getRollPitchYaw()[0];
+    Dog.IMUUpdate();
+    SDParam.alphacurr = Dog.IMU_RPY[1];
+    SDParam.betacurr = Dog.IMU_RPY[0];
     MatrixHInit(H, SDParam.alphacurr, SDParam.betacurr,
                 Dog.Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::Shoulder],
                 Dog.Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::Shoulder],
                 Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::Shoulder],
                 Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::Shoulder]);
-    TorqueCalculate(H, Fs, SDParam, Dog.Legs[(int)DirEnumdef::LF].JointTorque, Dog.Legs[(int)DirEnumdef::RF].JointTorque, Dog.Legs[(int)DirEnumdef::LB].JointTorque, Dog.Legs[(int)DirEnumdef::RB].JointTorque);
+    TorqueCalculate(H, Fs, SDParam, Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque, Dog.Legs[(int)DirEnumdef::RF].JointTargetTorque, Dog.Legs[(int)DirEnumdef::LB].JointTargetTorque, Dog.Legs[(int)DirEnumdef::RB].JointTargetTorque);
+    for(auto l:Dog.Legs)
+    {
+      l.SetTorque(l.JointTargetTorque[(int)JointEnumdef::Shoulder], l.JointTargetTorque[(int)JointEnumdef::LegUp], l.JointTargetTorque[(int)JointEnumdef::LegDown]);
+    }
   };
 
   delete robot;

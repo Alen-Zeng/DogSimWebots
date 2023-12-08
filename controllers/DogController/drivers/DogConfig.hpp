@@ -20,7 +20,7 @@
  * @param imu 
  * @param sdpara 弹簧阻尼器参数
  */
-void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4], webots::InertialUnit *imu, Spring_Damper &sdpara)
+void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef (&legs)[4], webots::InertialUnit *(&imu), Spring_Damper &sdpara)
 {
   /* 获取关节电机 */
   legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Shoulder]=robot->getMotor("JShoulderLF");
@@ -100,6 +100,10 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
     {
       IMU_Quaternion[i] = imu->getQuaternion()[i];
     }
+    for (int i = 0; i < 3; i++)
+    {
+      IMU_RPY[i] = imu->getRollPitchYaw()[i];
+    }
   }
   std::cout << "IMU Initialized" << std::endl;
 
@@ -134,16 +138,16 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
 
   /* 关节复位 */
   std::cout << "Legs Reseting" << std::endl;
-  while ((!legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140)) 
-      || !legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140)) 
-      || !legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140)) 
-      || !legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140)))
+  while ((!legs[(int)DirEnumdef::LF].Reset(Radians(0), Radians(60), Radians(-140)) 
+       || !legs[(int)DirEnumdef::RF].Reset(Radians(0), Radians(-60), Radians(140)) 
+       || !legs[(int)DirEnumdef::LB].Reset(Radians(0), Radians(60), Radians(-140)) 
+       || !legs[(int)DirEnumdef::RB].Reset(Radians(0), Radians(-60), Radians(140)))
       && robot->step(timestep) != -1)
       {
-        legs[(int)DirEnumdef::LF].Reset(0, Radians(60), Radians(-140));
-        legs[(int)DirEnumdef::RF].Reset(0, Radians(-60), Radians(140));
-        legs[(int)DirEnumdef::LB].Reset(0, Radians(60), Radians(-140));
-        legs[(int)DirEnumdef::RB].Reset(0, Radians(-60), Radians(140));
+        legs[(int)DirEnumdef::LF].Reset(Radians(0), Radians(60), Radians(-140));
+        legs[(int)DirEnumdef::RF].Reset(Radians(0), Radians(-60), Radians(140));
+        legs[(int)DirEnumdef::LB].Reset(Radians(0), Radians(60), Radians(-140));
+        legs[(int)DirEnumdef::RB].Reset(Radians(0), Radians(-60), Radians(140));
       }
   std::cout << "Legs Reset" << std::endl;
 
@@ -151,8 +155,8 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
   sdpara.Kx = 0;
   sdpara.Ky = 0;
   sdpara.Kz = 0;
-  sdpara.Kalpha = 1;
-  sdpara.Kbeta = 1;
+  sdpara.Kalpha = 0.005;
+  sdpara.Kbeta = 0.005;
   sdpara.Bx = 0;
   sdpara.By = 0;
   sdpara.Bz = 0;
