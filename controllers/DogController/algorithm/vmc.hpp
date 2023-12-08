@@ -5,7 +5,7 @@
 /* Private macros ------------------------------------------------------------*/
 Eigen::MatrixXd H(20, 5);
 Eigen::MatrixXd Fs(5, 1);
-static const double L, L1, L2, s;/* TODO */
+static const double L=0.2965, L1=0.33, L2=0.33, s=0.09;
 static const double errorMin = 0.001;
 /* Private type --------------------------------------------------------------*/
 namespace vmcspace

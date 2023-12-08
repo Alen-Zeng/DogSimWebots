@@ -98,7 +98,7 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
   {
     for (int i = 0; i < 4; i++)
     {
-      IMU_Quaternion[i] = imu->getQuaternion()[i];
+      IMU_Quaternion = imu->getQuaternion();
     }
   }
   std::cout << "IMU Initialized" << std::endl;
