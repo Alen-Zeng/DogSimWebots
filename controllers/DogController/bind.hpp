@@ -122,7 +122,7 @@ DogClassdef Dog;
 #endif
 
 template <typename T>
-const T &abs(const T &input)
+const T abs(const T input)
 {
   return input < (T)0 ? -input : input;
 }

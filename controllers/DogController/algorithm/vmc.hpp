@@ -12,7 +12,7 @@ static const double errorMin = 0.001;
 namespace vmcspace
 {
   template <typename T>
-  const T &abs(const T &input)
+  const T abs(const T input)
   {
     return input < (T)0 ? -input : input;
   }
@@ -83,7 +83,6 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
  
 
 
-
 }
 
 
@@ -115,11 +114,13 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   BMat(2, 2) = sdPara.Bz;
   BMat(3, 3) = sdPara.Balpha;
   BMat(4, 4) = sdPara.Bbeta;
+
   Pose << (vmcspace::abs(sdPara.xd - sdPara.xcurr) > errorMin ? sdPara.xd - sdPara.xcurr : 0),
           (vmcspace::abs(sdPara.yd - sdPara.ycurr) > errorMin ? sdPara.yd - sdPara.ycurr : 0),
           (vmcspace::abs(sdPara.zd - sdPara.zcurr) > errorMin ? sdPara.zd - sdPara.zcurr : 0),
           (vmcspace::abs(sdPara.alphad - sdPara.alphacurr) > errorMin ? sdPara.alphad - sdPara.alphacurr : 0),
           (vmcspace::abs(sdPara.betad - sdPara.betacurr) > errorMin ? sdPara.betad - sdPara.betacurr : 0);
+
   Veloc << (vmcspace::abs(sdPara.diffxd - sdPara.diffxcurr) > errorMin ? sdPara.diffxd - sdPara.diffxcurr : 0),
            (vmcspace::abs(sdPara.diffyd - sdPara.diffycurr) > errorMin ? sdPara.diffyd - sdPara.diffycurr : 0),
            (vmcspace::abs(sdPara.diffzd - sdPara.diffzcurr) > errorMin ? sdPara.diffzd - sdPara.diffzcurr : 0),
@@ -130,18 +131,19 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
 
   torMat = _H * _F;
   
-  lfTorque[(int)JointEnumdef::LegDown] = torMat(1, 0);
-  lfTorque[(int)JointEnumdef::LegUp] = torMat(2, 0);
-  lfTorque[(int)JointEnumdef::Shoulder] = torMat(4, 0);
+  lfTorque[(int)JointEnumdef::LegDown] = -torMat(1, 0);
+  lfTorque[(int)JointEnumdef::LegUp] = -torMat(2, 0);
+  lfTorque[(int)JointEnumdef::Shoulder] = -torMat(4, 0);
   rfTorque[(int)JointEnumdef::LegDown] = torMat(1+5, 0);
   rfTorque[(int)JointEnumdef::LegUp] = torMat(2+5, 0);
   rfTorque[(int)JointEnumdef::Shoulder] = torMat(4+5, 0);
-  lbTorque[(int)JointEnumdef::LegDown] = torMat(1+10, 0);
-  lbTorque[(int)JointEnumdef::LegUp] = torMat(2+10, 0);
-  lbTorque[(int)JointEnumdef::Shoulder] = torMat(4+10, 0);
+  lbTorque[(int)JointEnumdef::LegDown] = -torMat(1+10, 0);
+  lbTorque[(int)JointEnumdef::LegUp] = -torMat(2+10, 0);
+  lbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+10, 0);
   rbTorque[(int)JointEnumdef::LegDown] = torMat(1+15, 0);
   rbTorque[(int)JointEnumdef::LegUp] = torMat(2+15, 0);
   rbTorque[(int)JointEnumdef::Shoulder] = torMat(4+15, 0);
-  
+
+  std::cout << "tormat: " << torMat << std::endl;
 }
 
