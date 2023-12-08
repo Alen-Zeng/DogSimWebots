@@ -9,6 +9,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include <bind.hpp>
 #include <drivers/DogConfig.hpp>
+#include <algorithm/vmc.hpp>
+
 
 int main(int argc, char **argv)
 {
@@ -29,10 +31,10 @@ int main(int argc, char **argv)
                 Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::Shoulder],
                 Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::Shoulder]);
     TorqueCalculate(H, Fs, SDParam, Dog.Legs[(int)DirEnumdef::LF].JointTorque, Dog.Legs[(int)DirEnumdef::RF].JointTorque, Dog.Legs[(int)DirEnumdef::LB].JointTorque, Dog.Legs[(int)DirEnumdef::RB].JointTorque);
-    for(auto l:Dog.Legs)
-    {
-      l.SetTorque(l.JointTorque[(int)JointEnumdef::Shoulder], l.JointTorque[(int)JointEnumdef::LegUp], l.JointTorque[(int)JointEnumdef::LegDown]);
-    }
+    // for(auto l:Dog.Legs)
+    // {
+      // l.SetTorque(l.JointTorque[(int)JointEnumdef::Shoulder], l.JointTorque[(int)JointEnumdef::LegUp], l.JointTorque[(int)JointEnumdef::LegDown]);
+    // }
   };
 
   delete robot;

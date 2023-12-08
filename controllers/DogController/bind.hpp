@@ -4,7 +4,7 @@
 #include <webots/Motor.hpp>
 #include <webots/PositionSensor.hpp>
 #include <webots/Robot.hpp>
-#include <algorithm/vmc.hpp>
+#include <iostream>
 /* Types ---------------------------------------------------------------------*/
 enum class JointEnumdef
 {
@@ -20,6 +20,44 @@ enum class DirEnumdef
   LB,
   RB
 };
+
+/**
+ * @brief 弹簧阻尼器参数
+ * 
+ */
+typedef struct _Spring_Damper
+{
+  double xd;
+  double yd;
+  double zd;
+  double alphad;
+  double betad;
+  double xcurr;
+  double ycurr;
+  double zcurr;
+  double alphacurr;
+  double betacurr;
+  double diffxd;        // 目标速度旋量
+  double diffyd;        // 目标速度旋量
+  double diffzd;        // 目标速度旋量
+  double diffalphad;    // 目标速度旋量
+  double diffbetad;     // 目标速度旋量
+  double diffxcurr;     // 当前速度旋量
+  double diffycurr;     // 当前速度旋量
+  double diffzcurr;     // 当前速度旋量
+  double diffalphacurr; // 当前速度旋量
+  double diffbetacurr;  // 当前速度旋量
+  double Kx;            // 弹簧参数
+  double Ky;            // 弹簧参数
+  double Kz;            // 弹簧参数
+  double Kalpha;        // 弹簧参数
+  double Kbeta;         // 弹簧参数
+  double Bx;            // 阻尼器参数
+  double By;            // 阻尼器参数
+  double Bz;            // 阻尼器参数
+  double Balpha;        // 阻尼器参数
+  double Bbeta;         // 阻尼器参数
+}Spring_Damper;
 
 class DogLegClassdef
 {
@@ -56,16 +94,15 @@ private:
 public:
   DogLegClassdef Legs[4];
   webots::InertialUnit *IMU;
-  const double *IMU_Quaternion; // xyzw
-  const double *IMU_RPY;        // xyzw
+  double IMU_Quaternion[4]; // xyzw
+  double IMU_RPY[3];        // xyzw
 
-  void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4], webots::InertialUnit *imu, Spring_Damper &sdpara);
+  void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef (&legs)[4], webots::InertialUnit *(&imu), Spring_Damper &sdpara);
   void IMUUpdate();
 
   DogClassdef(/* args */){};
   ~DogClassdef(){};
 };
-
 
 /* Macros --------------------------------------------------------------------*/
 int timeStep; /* 仿真周期 */
@@ -148,6 +185,7 @@ void DogLegClassdef::JointPositionUpdate()
   for (int s = 0; s < 4; s++)
   {
     JointPosition[s] = LegPosSensor[s]->getValue();
+    std::cout << LegJoint[s]->getName() << ": " << JointPosition[s] << std::endl;
   }
 }
 
@@ -187,6 +225,14 @@ void DogLegClassdef::SetTorque(double shoulderTor, double legupTor, double legdo
  */
 void DogClassdef::IMUUpdate()
 {
-  IMU_Quaternion = IMU->getQuaternion();
-  IMU_RPY = IMU->getRollPitchYaw();
+  for (size_t i = 0; i < 4; i++)
+  {
+    IMU_Quaternion[i] = IMU->getQuaternion()[i];
+  }
+  for (size_t i = 0; i < 3; i++)
+  {
+    IMU_RPY[i] = IMU->getRollPitchYaw()[i];
+  }
+  std::cout << "imu quatenion: " << IMU_Quaternion[0] << " " << IMU_Quaternion[1] << " " << IMU_Quaternion[2] << " " << IMU_Quaternion[3] << std::endl;
+  std::cout << "imu rpy: " << IMU_RPY[0] << " " << IMU_RPY[1] << " " << IMU_RPY[2] << std::endl;
 }

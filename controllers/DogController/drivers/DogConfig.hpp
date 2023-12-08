@@ -20,7 +20,7 @@
  * @param imu 
  * @param sdpara 弹簧阻尼器参数
  */
-void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef legs[4], webots::InertialUnit *imu, Spring_Damper &sdpara)
+void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef (&legs)[4], webots::InertialUnit *(&imu), Spring_Damper &sdpara)
 {
   /* 获取关节电机 */
   legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Shoulder]=robot->getMotor("JShoulderLF");
@@ -98,7 +98,11 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
   {
     for (int i = 0; i < 4; i++)
     {
-      IMU_Quaternion = imu->getQuaternion();
+      IMU_Quaternion[i] = imu->getQuaternion()[i];
+    }
+    for (int i = 0; i < 3; i++)
+    {
+      IMU_RPY[i] = imu->getRollPitchYaw()[i];
     }
   }
   std::cout << "IMU Initialized" << std::endl;
