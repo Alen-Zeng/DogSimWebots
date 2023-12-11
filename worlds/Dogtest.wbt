@@ -5,14 +5,15 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
 EXTERNPROTO "../protos/dog_asm2.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/WoodenBox.proto"
 
 WorldInfo {
   basicTimeStep 4
   FPS 30
 }
 Viewpoint {
-  orientation -0.3300208991490813 -0.24053121752117368 0.9128148440525131 4.137399397007629
-  position 0.965269235077591 1.7150992067031576 2.42745275308094
+  orientation -0.0667832133748768 -0.11588625775466507 0.9910148221267657 4.594685740590492
+  position 0.2774984091327055 4.811546628253171 1.5374842930025994
 }
 TexturedBackground {
 }
@@ -27,4 +28,8 @@ RectangleArena {
 dog_asm2 {
   translation 0 0 0.78
   controller "DogController"
+}
+WoodenBox {
+  translation 1.14 0 0.3
+  size 0.4 0.1 0.8
 }

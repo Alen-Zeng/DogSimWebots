@@ -1,10 +1,11 @@
 #pragma once
 /* Includes ------------------------------------------------------------------*/
+#include <cmath>
+#include <iostream>
 #include <webots/InertialUnit.hpp>
 #include <webots/Motor.hpp>
 #include <webots/PositionSensor.hpp>
 #include <webots/Robot.hpp>
-#include <iostream>
 /* Types ---------------------------------------------------------------------*/
 enum class JointEnumdef
 {
@@ -83,6 +84,7 @@ public:
   void JointPositionUpdate();
   void SetHeight(double height);
   void SetWheelVelocity(double velocity);
+  void SetTorque(double legupTor, double legdownTor);
   void SetTorque(double shoulderTor, double legupTor, double legdownTor);
   void SetTorque(double shoulderTor, double legupTor, double legdownTor, double wheelTor);
 };
@@ -96,9 +98,11 @@ public:
   webots::InertialUnit *IMU;
   double IMU_Quaternion[4]; // xyzw
   double IMU_RPY[3];        // xyzw
+  double DogPosition[3];    //xyz
 
   void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef (&legs)[4], webots::InertialUnit *(&imu), Spring_Damper &sdpara);
   void IMUUpdate();
+  void PositionUpdate();
 
   DogClassdef(/* args */){};
   ~DogClassdef(){};
@@ -111,6 +115,7 @@ int timeStep; /* 仿真周期 */
 #endif
 Spring_Damper SDParam={0};
 DogClassdef Dog;
+const double L=0.2965, L1=0.33, L2=0.33, s=0.09;
 /* Function declarations -----------------------------------------------------*/
 
 #ifndef Radians
@@ -196,6 +201,19 @@ void DogLegClassdef::JointPositionUpdate()
  * @param legupTor 
  * @param legdownTor 
  */
+void DogLegClassdef::SetTorque(double legupTor, double legdownTor)
+{
+  LegJoint[(int)JointEnumdef::LegUp]->setTorque(legupTor);
+  LegJoint[(int)JointEnumdef::LegDown]->setTorque(legdownTor);
+}
+
+/**
+ * @brief 设置关节力矩
+ * 
+ * @param shoulderTor 
+ * @param legupTor 
+ * @param legdownTor 
+ */
 void DogLegClassdef::SetTorque(double shoulderTor, double legupTor, double legdownTor)
 {
   LegJoint[(int)JointEnumdef::Shoulder]->setTorque(shoulderTor);
@@ -233,6 +251,26 @@ void DogClassdef::IMUUpdate()
   {
     IMU_RPY[i] = IMU->getRollPitchYaw()[i];
   }
-  std::cout << "imu quatenion: " << IMU_Quaternion[0] << " " << IMU_Quaternion[1] << " " << IMU_Quaternion[2] << " " << IMU_Quaternion[3] << std::endl;
+  // std::cout << "imu quatenion: " << IMU_Quaternion[0] << " " << IMU_Quaternion[1] << " " << IMU_Quaternion[2] << " " << IMU_Quaternion[3] << std::endl;
   std::cout << "imu rpy: " << IMU_RPY[0] << " " << IMU_RPY[1] << " " << IMU_RPY[2] << std::endl;
+}
+
+/**
+ * @brief 
+ * 
+ */
+void DogClassdef::PositionUpdate()
+{
+  for (auto l : Legs)
+  {
+    l.JointPositionUpdate();
+  }
+  double Ltlf = L1 * cos(-IMU_RPY[1] + Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegDown] + Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegUp]) + L2 * cos(-IMU_RPY[1] + Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegDown] + Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegUp] - Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::LegDown]);
+  double Ltrf = L1 * cos(-IMU_RPY[1] - Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegDown] - Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegUp]) + L2 * cos(-IMU_RPY[1] - Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegDown] - Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegUp] + Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::LegDown]);
+  double Ltlb = L1 * cos(-IMU_RPY[1] + Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegDown] + Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegUp]) + L2 * cos(-IMU_RPY[1] + Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegDown] + Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegUp] - Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegDown]);
+  double Ltrb = L1 * cos(-IMU_RPY[1] - Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegDown] - Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegUp]) + L2 * cos(-IMU_RPY[1] - Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegDown] - Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegUp] + Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegDown]);
+  DogPosition[0] = 0;
+  DogPosition[1] = 0;
+  DogPosition[2] = (Ltlf+Ltrf+Ltlb+Ltrb)/4;
+  std::cout << "x:" << DogPosition[0] << " y:" << DogPosition[1] << " z:" << DogPosition[2] << std::endl;
 }

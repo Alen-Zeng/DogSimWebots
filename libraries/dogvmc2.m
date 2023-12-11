@@ -1,7 +1,7 @@
 %%
 % syms O0 O1 O2 O3 O4 L L1 L2 Lt s
 
-% T4=[1,0,-L;
+% T4=[1,0,L;
 %     0,1,0;
 %     0,0,1];
 % T3=[cos(O2),-sin(O2),0;
@@ -50,6 +50,14 @@ syms Ltlf Ltrf Ltlb Ltrb
 syms Pl Pr Ql Qr Rl Sl Rr Sr Uf Wf Ub Wb
 syms Jlf Jrf Jlb Jrb
 
+% L=0.2965; L1=0.33; L2=0.33; s=0.09;
+% O0lf=pi/8;
+% O1lf=pi/8;
+% O2lf=-pi/6;
+% O3lf=0;
+% O4lf=0;
+% O0rf=pi/8; O1rf=pi/8; O2rf=-pi/6; O3rf=0; O4rf=0; O0lb=pi/8; O1lb=pi/8; O2lb=-pi/6; O3lb =0;O4lb=0; O0rb=pi/8; O1rb=pi/8; O2rb=-pi/6; O3rb=0; O4rb=0;
+
 % Ltlf=L1*cos(O0lf) + L2*cos(O0lf+O1lf);
 % Ltrf=L1*cos(O0rf) + L2*cos(O0rf+O1rf);
 % Ltlb=L1*cos(O0lb) + L2*cos(O0lb+O1lb);
@@ -68,18 +76,41 @@ syms Jlf Jrf Jlb Jrb
 % Wf=-s*sin(O3rf+O4rf)-Ltrf*cos(O3rf);
 % Wb=-s*sin(O3rb+O4rb)-Ltrb*cos(O3rb);
 
+% T=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0;
+%    0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0;
+%    0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0;
+%    0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0;
+%    0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;
+%    0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0;
+%    0,0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1;
+%    1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0,0,0,0;
+%    Pl,0,Ql,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,Pr,0,Qr,1,0,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,Rl,0,Sl,1,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,Rr,0,Sr,1,0;
+%    0,Uf,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,0,Wf,0,0,1,0,0,0,0,0,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,0,Ub,0,0,1,0,0,0,0,0;
+%    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,Wb,0,0,1]
+
 T=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0;
    0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0;
    0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0;
    0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0;
    0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;
-   0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0;
+   
+   0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0;
    0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0;
-   0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0;
-   0,0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0;
-   0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1;
-   1,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
-   0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0,0,0,0;
+   0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1;
+   0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1,0,0,0,0,0;
+   0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0;
+   0,0,0,0,0,0,0,1,0,0,0,0,-1,0,0,0,0,0,0,0;
+   0,0,1,0,0,0,0,-1,0,0,0,0,-1,0,0,0,0,1,0,0;
+
    Pl,0,Ql,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
    0,0,0,0,0,Pr,0,Qr,1,0,0,0,0,0,0,0,0,0,0,0;
    0,0,0,0,0,0,0,0,0,0,Rl,0,Sl,1,0,0,0,0,0,0;
@@ -90,20 +121,23 @@ T=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0;
    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,Wb,0,0,1];
 
 
-% Det=det(T')
-Rank=rank(T');
+% Det=det(T)
+Rank=rank(T)
 % [B,p]=rref(T)
-T_=inv(T);
+T_=inv(T)
 
 
 %取出不为0的5列
 T_t=transpose(T_);
-K_t=[               -(Ql*Qr*Rl*Sr + Ql*Qr*Rr*Sl)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                         0,                                              (Pl*Qr*Rl*Sr + Pl*Qr*Rr*Sl)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),   0,                                                                                   0,                   -(Ql*Qr*Rl*Sr + Ql*Qr*Rr*Sl)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                          0,                                          (Pr*Ql*Rl*Sr + Pr*Ql*Rr*Sl)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),    0,                                                                                  0,                    (Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                          0,                                         -(Pl*Qr*Rl*Sr + Pr*Ql*Rl*Sr)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),    0,                                                                                  0,                    (Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                         0,                                             -(Pl*Qr*Rr*Sl + Pr*Ql*Rr*Sl)/(2*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),    0,                                                                                 0;
-                                                                                                         0,                    (Ub*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                                                    0,   0,                          -(Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                          0,                     (Ub*Uf*Wb)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                                                0,    0,                         -(Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                          0,                    -(Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                                                0,    0,                          (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                          0,                   -(Ub*Uf*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf),                                                                                                                                    0,    0,                           (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf);
-                                    -(Ql*Qr*Sl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),                                                                         0,                                                                (Pl*Qr*Sl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),   0,                                                                                   0,                                     -(Ql*Qr*Sl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),                                                                          0,                                                            (Pr*Ql*Sl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),    0,                                                                                  0,                                      (Ql*Qr*Sl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),                                                                          0,                                                           -(Ql*Qr*Rl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),    0,                                                                                  0,                                      (Ql*Qr*Sl*Sr)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),                                                                         0,                                                               -(Ql*Qr*Rr*Sl)/(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl),    0,                                                                                   0;
-  -(Ql*Qr*Sl + Ql*Qr*Sr + Ql*Sl*Sr + Qr*Sl*Sr)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                         0,        (Pl*Qr*Sl + Pl*Qr*Sr + Pl*Sl*Sr - Pr*Sl*Sr + Qr*Rl*Sr + Qr*Rr*Sl)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)), 1/4,                                                                                   0,   -(Ql*Qr*Sl + Ql*Qr*Sr + Ql*Sl*Sr + Qr*Sl*Sr)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                          0,    (Pr*Ql*Sl + Pr*Ql*Sr - Pl*Sl*Sr + Ql*Rl*Sr + Ql*Rr*Sl + Pr*Sl*Sr)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),  1/4,                                                                                  0,    (Ql*Qr*Sl + Ql*Qr*Sr + Ql*Sl*Sr + Qr*Sl*Sr)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                          0,   -(Ql*Qr*Rl + Pl*Qr*Sr + Pr*Ql*Sr - Ql*Qr*Rr + Ql*Rl*Sr + Qr*Rl*Sr)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),  1/4,                                                                                  0,    (Ql*Qr*Sl + Ql*Qr*Sr + Ql*Sl*Sr + Qr*Sl*Sr)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),                                                                         0,       -(Pl*Qr*Sl + Pr*Ql*Sl - Ql*Qr*Rl + Ql*Qr*Rr + Ql*Rr*Sl + Qr*Rr*Sl)/(4*(Pl*Qr*Sl*Sr + Pr*Ql*Sl*Sr - Ql*Qr*Rl*Sr - Ql*Qr*Rr*Sl)),  1/4,                                                                                   0;
-                                                                                                         0,           (Ub*Wf + Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                                                    0,   0,              -(Ub*Uf*Wf + Uf*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                          0,            (Ub*Uf + Uf*Wb)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                                                0,    0,             -(Ub*Uf*Wf + Uf*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                          0,           -(Uf*Wb + Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                                                0,    0,              (Ub*Uf*Wb + Ub*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                          0,          -(Ub*Uf + Ub*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf)),                                                                                                                                    0,    0,               (Ub*Uf*Wb + Ub*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf + Ub*Wb*Wf - Uf*Wb*Wf))];
-K=transpose(K_t);
+
+K_t=[                                                       (Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                          0,   0,                                               -(Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                  0,                                                            -(Pl*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                         0,    0,                                               (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                   0,                                                            -(Pl*Pr*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                          0,    0,                                               (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                  0,                                                             (Pl*Pr*Rl)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                         0,    0,                                               -(Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                   0;
+                                                                                                                 0,                    -(Ub*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),   0,                                                                                                        0,                          (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                  0,                    (Ub*Uf*Wb)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),    0,                                                                                                       0,                          -(Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                  0,                     (Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),    0,                                                                                                       0,                         -(Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                  0,                   -(Ub*Uf*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),    0,                                                                                                        0,                           (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf);
+ (Pr*Ql*Rr - Pr*Ql*Rl + Ql*Rl*Rr + Pr*Rl*Sr + Pr*Rr*Sl + Qr*Rl*Rr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                          0, 1/4, -(Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                  0, -(Pl*Qr*Rl - Pl*Qr*Rr + Pl*Rl*Sr + Pl*Rr*Sl + Ql*Rl*Rr + Qr*Rl*Rr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                         0,  1/4, (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                   0, -(Pl*Pr*Sl + Pl*Pr*Sr + Pl*Qr*Rr + Pr*Ql*Rr - Pl*Rr*Sl + Pr*Rr*Sl)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                          0,  1/4, (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                  0,  (Pl*Pr*Sl + Pl*Qr*Rl + Pr*Ql*Rl + Pl*Pr*Sr + Pl*Rl*Sr - Pr*Rl*Sr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                         0,  1/4, -(Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                   0;
+                                                   (Pr*Rr + Rl*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                          0,   0,                                   -(Pl*Pr*Rr + Pl*Rl*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                  0,                                                   -(Pl*Rl + Rl*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                         0,    0,                                   (Pl*Pr*Rl + Pr*Rl*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                   0,                                                   -(Pl*Pr + Pr*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                          0,    0,                                   (Pl*Pr*Rl + Pr*Rl*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                  0,                                                    (Pl*Pr + Pl*Rl)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                         0,    0,                                   -(Pl*Pr*Rr + Pl*Rl*Rr)/(2*(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr)),                                                                                   0;
+                                                                                                                 0,           -(Ub*Wb + Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),   0,                                                                                                        0,              (Ub*Uf*Wb + Uf*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),                                                                                                                  0,           (Ub*Uf + Ub*Wb)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),    0,                                                                                                       0,              -(Ub*Uf*Wf + Ub*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),                                                                                                                  0,            (Uf*Wf + Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),    0,                                                                                                       0,             -(Ub*Uf*Wf + Ub*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),                                                                                                                  0,          -(Ub*Uf + Uf*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf)),    0,                                                                                                        0,               (Ub*Uf*Wb + Uf*Wb*Wf)/(2*(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf))];
+
+
+K=transpose(K_t)
 
 
 Jlf=[-L1*cos(O0lf)-L2*cos(O0lf+O1lf)+L*sin(O0lf+O1lf+O2lf),0,-L1*sin(O0lf)-L2*sin(O0lf+O1lf)-L*cos(O0lf+O1lf+O2lf),1,0;
@@ -134,19 +168,19 @@ Jtotal=[
      -L1*cos(O0lf)-L2*cos(O0lf+O1lf)+L*sin(O0lf+O1lf+O2lf),0,-L1*sin(O0lf)-L2*sin(O0lf+O1lf)-L*cos(O0lf+O1lf+O2lf),1,0, 0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0;
      -L2*cos(O0lf+O1lf)+L*sin(O0lf+O1lf+O2lf),0,-L2*sin(O0lf+O1lf)-L*cos(O0lf+O1lf+O2lf),1,0,                           0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0;
      L*sin(O0lf+O1lf+O2lf),0,-L*cos(O0lf+O1lf+O2lf),1,0,                                                                0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0;
-     0,s*sin(O3lf+O4lf)-Ltlf*cos(O3lf),0,0,1,                                                                             0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0;
+     0,s*sin(O3lf+O4lf)-Ltlf*cos(O3lf),0,0,1,                                                                           0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0;
      0,s*sin(O3lf+O4lf),0,0,1,                                                                                          0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0;
      
      0,0,0,0,0, -L1*cos(O0rf)-L2*cos(O0rf+O1rf)+L*sin(O0rf+O1rf+O2rf),0,-L1*sin(O0rf)-L2*sin(O0rf+O1rf)-L*cos(O0rf+O1rf+O2rf),1,0,  0,0,0,0,0,0,0,0,0,0;
      0,0,0,0,0, -L2*cos(O0rf+O1rf)+L*sin(O0rf+O1rf+O2rf),0,-L2*sin(O0rf+O1rf)-L*cos(O0rf+O1rf+O2rf),1,0,                            0,0,0,0,0,0,0,0,0,0;
      0,0,0,0,0, L*sin(O0rf+O1rf+O2rf),0,-L*cos(O0rf+O1rf+O2rf),1,0,                                                                 0,0,0,0,0,0,0,0,0,0;
-     0,0,0,0,0, 0,-s*sin(O3rf+O4rf)-Ltrf*cos(O3rf),0,0,1,                                                                             0,0,0,0,0,0,0,0,0,0;
+     0,0,0,0,0, 0,-s*sin(O3rf+O4rf)-Ltrf*cos(O3rf),0,0,1,                                                                           0,0,0,0,0,0,0,0,0,0;
      0,0,0,0,0, 0,-s*sin(O3rf+O4rf),0,0,1,                                                                                          0,0,0,0,0,0,0,0,0,0;
      
      0,0,0,0,0,0,0,0,0,0,   -L1*cos(O0lb)-L2*cos(O0lb+O1lb)-L*sin(O0lb+O1lb+O2lb),0,-L1*sin(O0lb)-L2*sin(O0lb+O1lb)+L*cos(O0lb+O1lb+O2lb),1,0,  0,0,0,0,0;
      0,0,0,0,0,0,0,0,0,0,   -L2*cos(O0lb+O1lb)-L*sin(O0lb+O1lb+O2lb),0,-L2*sin(O0lb+O1lb)+L*cos(O0lb+O1lb+O2lb),1,0,                            0,0,0,0,0;
      0,0,0,0,0,0,0,0,0,0,   -L*sin(O0lb+O1lb+O2lb),0,+L*cos(O0lb+O1lb+O2lb),1,0,                                                                0,0,0,0,0;
-     0,0,0,0,0,0,0,0,0,0,   0,s*sin(O3lb+O4lb)-Ltlb*cos(O3lb),0,0,1,                                                                              0,0,0,0,0;
+     0,0,0,0,0,0,0,0,0,0,   0,s*sin(O3lb+O4lb)-Ltlb*cos(O3lb),0,0,1,                                                                            0,0,0,0,0;
      0,0,0,0,0,0,0,0,0,0,   0,s*sin(O3lb+O4lb),0,0,1,                                                                                           0,0,0,0,0;
      
      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -L1*cos(O0rb)-L2*cos(O0rb+O1rb)-L*sin(O0rb+O1rb+O2rb),0,-L1*sin(O0rb)-L2*sin(O0rb+O1rb)+L*cos(O0rb+O1rb+O2rb),1,0;
@@ -156,5 +190,11 @@ Jtotal=[
      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,-s*sin(O3rb+O4rb),0,0,1];
 
 H=Jtotal*K
+% F=[0;
+%    0;
+%    1;
+%    0;
+%    0];
+% jointtor=H*F
 
 

@@ -86,6 +86,7 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
       for (int s = 0; s < 4; s++)
       {
         legs->JointPosition[s] = legs[i].LegPosSensor[s]->getValue();
+        // std::cout << legs[i].LegPosSensor[s]->getName() << ":" << legs[i].LegPosSensor[s]->getValue() << std::endl;
       }
     }
   }
@@ -152,11 +153,12 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
   std::cout << "Legs Reset" << std::endl;
 
   /* 初始化弹簧阻尼器参数,其他参数先暂时通过结构体初始化为0 */
+  sdpara.zd = 0.55;
   sdpara.Kx = 0;
   sdpara.Ky = 0;
   sdpara.Kz = 0;
-  sdpara.Kalpha = 0.005;
-  sdpara.Kbeta = 0.005;
+  sdpara.Kalpha = 100;
+  sdpara.Kbeta = 0.0;
   sdpara.Bx = 0;
   sdpara.By = 0;
   sdpara.Bz = 0;
