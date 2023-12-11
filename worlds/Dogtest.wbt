@@ -5,10 +5,9 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
 EXTERNPROTO "../protos/dog_asm2.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/WoodenBox.proto"
 
 WorldInfo {
-  basicTimeStep 4
+  basicTimeStep 7
   FPS 30
   contactProperties [
     ContactProperties {
@@ -16,61 +15,41 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.10337572658899491 0.12444331946621989 -0.986826894339846 1.3994218698899088
-  position -0.9820016160266514 14.108082259347263 3.957262105960016
+  orientation 0.0019352266860641763 0.9999571594666563 -0.009051747292639833 0.421267518275877
+  position -12.335507110068958 -2.468610538075418 2.4548404409951017
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
+  translation 0 0 -0.21
   floorSize 37 16
   floorAppearance Parquetry {
     type "dark strip"
   }
 }
 dog_asm2 {
-  translation -2.7 -0.16 0.78
+  translation -7.79683 -2.44858 0.49
+  rotation 0 0 1 0.261805
   controller "DogController"
 }
-WoodenBox {
-  translation 1.01701 -0.0202264 -0.182363
-  rotation 0.8373771513429545 -0.5419490979489082 0.07134901289522934 0.15
-  size 3 3 0.8
-}
-WoodenBox {
-  translation -0.906745 -0.0357291 -0.332965
-  rotation 0.8373771513429545 -0.5419490979489082 0.07134901289522934 0.15
-  name "wooden box(5)"
-  size 3 3 0.8
-}
-WoodenBox {
-  translation 3.10477 0.00750042 -0.0144725
-  rotation 0.8373771513429545 -0.5419490979489082 0.07134901289522934 0.15
-  name "wooden box(1)"
-  size 3 3 0.8
-}
-WoodenBox {
-  translation 5.90182 -0.0130528 0.0894658
-  rotation 1 0 0 0.1
-  name "wooden box(2)"
-  size 3 3 0.8
-}
-WoodenBox {
-  translation 8.76182 -0.010054 0.0295408
-  rotation 1 0 0 0.05
-  name "wooden box(3)"
-  size 3 3 0.8
-}
-WoodenBox {
-  translation 11.6818 -0.0115534 -0.0403725
-  rotation 1 0 0 0
-  name "wooden box(4)"
-  size 3 3 0.8
-}
-WoodenBox {
-  translation 11.6818 -0.0145522 -0.100298
-  rotation 1 0 0 -0.05
-  name "wooden box(6)"
-  size 3 3 0.8
+Solid {
+  translation -2.1 4.44445e-06 -0.21
+  rotation 1 0 0 1.5708
+  children [
+    DEF ground Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.6 0.6
+        roughness 0.5
+        metalness 0.2
+      }
+      geometry Mesh {
+        url [
+          "ground.STL"
+        ]
+      }
+    }
+  ]
+  boundingObject USE ground
 }
