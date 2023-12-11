@@ -132,9 +132,9 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
           0,-s*sin(O3rb+O4rb),0,0,1;
 
   T_ = pseudoInverse(T);
-  std::cout << "pinv T_ " << T_ << std::endl;
+  // std::cout << "pinv T_ " << T_ << std::endl;
   K = T_.block<20, 5>(0, 0);
-  std::cout << "K Mat " << K << std::endl;
+  // std::cout << "K Mat " << K << std::endl;
 
   Jtotal.block<5, 5>(0, 0) = Jlf;
   Jtotal.block<5, 5>(5, 5) = Jrf;
@@ -198,16 +198,16 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   torMat = _H * _F;
   
   lfTorque[(int)JointEnumdef::LegDown] = -torMat(1, 0);
-  lfTorque[(int)JointEnumdef::LegUp] = -torMat(2, 0);
+  lfTorque[(int)JointEnumdef::LegUp] = torMat(2, 0);
   lfTorque[(int)JointEnumdef::Shoulder] = torMat(4, 0);
-  rfTorque[(int)JointEnumdef::LegDown] = torMat(1+5, 0);
+  rfTorque[(int)JointEnumdef::LegDown] = -torMat(1+5, 0);
   rfTorque[(int)JointEnumdef::LegUp] = torMat(2+5, 0);
   rfTorque[(int)JointEnumdef::Shoulder] = torMat(4+5, 0);
-  lbTorque[(int)JointEnumdef::LegDown] = -torMat(1+10, 0);
+  lbTorque[(int)JointEnumdef::LegDown] = --torMat(1+10, 0);
   lbTorque[(int)JointEnumdef::LegUp] = -torMat(2+10, 0);
   lbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+10, 0);
-  rbTorque[(int)JointEnumdef::LegDown] = torMat(1+15, 0);
-  rbTorque[(int)JointEnumdef::LegUp] = torMat(2+15, 0);
+  rbTorque[(int)JointEnumdef::LegDown] = --torMat(1+15, 0);
+  rbTorque[(int)JointEnumdef::LegUp] = -torMat(2+15, 0);
   rbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+15, 0);
 
   std::cout << "tormat: " << std::endl << torMat << std::endl;

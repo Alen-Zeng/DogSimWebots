@@ -176,7 +176,7 @@ PROTO dog_asm2 [
                             boundingObject USE WheelLF
                             physics Physics {
                               density -1
-                              mass 0.327510
+                              mass 3.27510
                               centerOfMass [ -0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
@@ -190,7 +190,7 @@ PROTO dog_asm2 [
                       boundingObject USE LegDownLF
                       physics Physics {
                         density -1
-                        mass 1.051700
+                        mass 10.51700
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
@@ -204,7 +204,7 @@ PROTO dog_asm2 [
                 boundingObject USE LegUpLF
                 physics Physics {
                   density -1
-                  mass 1.801500
+                  mass 18.01500
                   centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
@@ -218,7 +218,7 @@ PROTO dog_asm2 [
           boundingObject USE ShoulderLF
           physics Physics {
             density -1
-            mass 0.713240
+            mass 7.13240
             centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
               9.852100e-04 1.027100e-03 8.053000e-04
@@ -349,7 +349,7 @@ PROTO dog_asm2 [
                             boundingObject USE WheelRF
                             physics Physics {
                               density -1
-                              mass 0.327510
+                              mass 3.27510
                               centerOfMass [ 0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
@@ -363,7 +363,7 @@ PROTO dog_asm2 [
                       boundingObject USE LegDownRF
                       physics Physics {
                         density -1
-                        mass 1.051700
+                        mass 10.51700
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
@@ -377,7 +377,7 @@ PROTO dog_asm2 [
                 boundingObject USE LegUpRF
                 physics Physics {
                   density -1
-                  mass 1.801500
+                  mass 18.01500
                   centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
@@ -391,7 +391,7 @@ PROTO dog_asm2 [
           boundingObject USE ShoulderRF
           physics Physics {
             density -1
-            mass 0.713240
+            mass 7.13240
             centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
               9.852100e-04 1.027100e-03 8.053000e-04
@@ -521,7 +521,7 @@ PROTO dog_asm2 [
                             boundingObject USE WheelLB
                             physics Physics {
                               density -1
-                              mass 0.327510
+                              mass 3.27510
                               centerOfMass [ 0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
@@ -535,7 +535,7 @@ PROTO dog_asm2 [
                       boundingObject USE LegDownLB
                       physics Physics {
                         density -1
-                        mass 1.051700
+                        mass 10.51700
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
@@ -549,7 +549,7 @@ PROTO dog_asm2 [
                 boundingObject USE LegUpLB
                 physics Physics {
                   density -1
-                  mass 1.801500
+                  mass 18.01500
                   centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
@@ -563,7 +563,7 @@ PROTO dog_asm2 [
           boundingObject USE ShoulderLB
           physics Physics {
             density -1
-            mass 0.713240
+            mass 7.13240
             centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
               9.852100e-04 1.027100e-03 8.053000e-04
@@ -695,7 +695,7 @@ PROTO dog_asm2 [
                             boundingObject USE WheelRB
                             physics Physics {
                               density -1
-                              mass 0.327510
+                              mass 3.27510
                               centerOfMass [ -0.000000 0.000000 0.015169 ]
                               inertiaMatrix [
                                 5.105600e-04 5.105600e-04 9.778600e-04
@@ -709,7 +709,7 @@ PROTO dog_asm2 [
                       boundingObject USE LegDownRB
                       physics Physics {
                         density -1
-                        mass 1.051700
+                        mass 10.51700
                         centerOfMass [ 0.165080 0.000000 -0.014832 ]
                         inertiaMatrix [
                           4.951700e-04 1.697900e-02 1.711900e-02
@@ -723,7 +723,7 @@ PROTO dog_asm2 [
                 boundingObject USE LegUpRB
                 physics Physics {
                   density -1
-                  mass 1.801500
+                  mass 18.01500
                   centerOfMass [ 0.140260 -0.000000 -0.049588 ]
                   inertiaMatrix [
                     1.856100e-03 2.539900e-02 2.454000e-02
@@ -737,7 +737,7 @@ PROTO dog_asm2 [
           boundingObject USE ShoulderRB
           physics Physics {
             density -1
-            mass 0.713240
+            mass 7.13240
             centerOfMass [ -0.000000 -0.001635 0.000941 ]
             inertiaMatrix [
               9.852100e-04 1.027100e-03 8.053000e-04
@@ -751,7 +751,7 @@ PROTO dog_asm2 [
     boundingObject USE Body
     physics Physics {
       density -1
-      mass 15.156000
+      mass 151.56000
       centerOfMass [ 0.001380 0.000000 0.023473 ]
       inertiaMatrix [
         9.408200e-02 3.346500e-01 3.879500e-01

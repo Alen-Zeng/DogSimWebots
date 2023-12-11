@@ -33,12 +33,12 @@ int main(int argc, char **argv)
                 Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegDown], Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::Shoulder],
                 -Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegDown], -Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::LegUp], Dog.Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::Shoulder]);
     TorqueCalculate(H, Fs, SDParam, Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque, Dog.Legs[(int)DirEnumdef::RF].JointTargetTorque, Dog.Legs[(int)DirEnumdef::LB].JointTargetTorque, Dog.Legs[(int)DirEnumdef::RB].JointTargetTorque);
-    // for(auto l:Dog.Legs)
-    // {
-    //   l.SetTorque(l.JointTargetTorque[(int)JointEnumdef::LegUp], l.JointTargetTorque[(int)JointEnumdef::LegDown]);
-    // }
+    for(auto l:Dog.Legs)
+    {
+      // l.SetTorque(l.JointTargetTorque[(int)JointEnumdef::LegUp], l.JointTargetTorque[(int)JointEnumdef::LegDown]);
+    }
     // std::cout << Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque[(int)JointEnumdef::LegUp] << " & " << Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque[(int)JointEnumdef::LegDown] << std::endl;
-    // Dog.Legs[(int)DirEnumdef::LF].SetTorque(Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque[(int)JointEnumdef::LegUp], /* Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque[(int)JointEnumdef::LegDown] */0);
+    // Dog.Legs[(int)DirEnumdef::LF].SetTorque(/* 0.1*Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque[(int)JointEnumdef::LegUp] */0, 0.001*Dog.Legs[(int)DirEnumdef::LF].JointTargetTorque[(int)JointEnumdef::LegDown]);
   };
 
   delete robot;
