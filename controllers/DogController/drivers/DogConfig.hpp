@@ -156,8 +156,8 @@ void DogClassdef::DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef 
   sdpara.zd = 0.55;
   sdpara.Kx = 0;
   sdpara.Ky = 0;
-  sdpara.Kz = 0;
-  sdpara.Kalpha = 100;
+  sdpara.Kz = 10;
+  sdpara.Kalpha = 0;
   sdpara.Kbeta = 0.0;
   sdpara.Bx = 0;
   sdpara.By = 0;

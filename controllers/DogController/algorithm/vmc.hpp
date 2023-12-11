@@ -19,6 +19,22 @@ namespace vmcspace
 /* Exported function declarations --------------------------------------------*/
 
 /**
+ * @brief 矩阵伪逆
+ * 
+ * @tparam _Matrix_Type_ 
+ * @param a 
+ * @param epsilon 
+ * @return _Matrix_Type_ 
+ */
+template <typename _Matrix_Type_>
+_Matrix_Type_ pseudoInverse(const _Matrix_Type_ &a, double epsilon = std::numeric_limits<double>::epsilon())
+{
+  Eigen::JacobiSVD<_Matrix_Type_> svd(a, Eigen::ComputeThinU | Eigen::ComputeThinV);
+  double tolerance = epsilon * std::max(a.cols(), a.rows()) * svd.singularValues().array().abs()(0);
+  return svd.matrixV() * (svd.singularValues().array().abs() > tolerance).select(svd.singularValues().array().inverse(), 0).matrix().asDiagonal() * svd.matrixU().adjoint();
+}
+
+/**
  * @brief 映射矩阵内容初始化
  * 
  * @param _H 映射矩阵
@@ -31,6 +47,9 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
   static double Pl, Pr, Ql, Qr, Rl, Sl, Rr, Sr, Uf, Wf, Ub, Wb;
   static double O0lf, O0rf, O0lb, O0rb;
   static double O3lf, O3rf, O3lb, O3rb;
+  static Eigen::MatrixXd T(20, 20),T_(20,20);
+  static Eigen::MatrixXd K(20, 5);
+  static Eigen::MatrixXd Jtotal = Eigen::MatrixXd::Zero(20, 20), Jlf(5, 5), Jrf(5, 5), Jlb(5, 5), Jrb(5, 5);
 
   O0lf = alpha - O1lf - O2lf;
   O0rf = alpha - O1rf - O2rf;
@@ -41,8 +60,10 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
   O3lb = beta - O4lb;
   O3rb = beta - O4rb;
 
+  std::cout << " O0lf:"<< O0lf << " O0rf:"<< O0rf << " O0lb:"<< O0lb << " O0rb:"<< O0rb << std::endl;
   std::cout << " O1lf:"<< O1lf << " O1rf:"<< O1rf << " O1lb:"<< O1lb << " O1rb:"<< O1rb << std::endl;
   std::cout << " O2lf:"<< O2lf << " O2rf:"<< O2rf << " O2lb:"<< O2lb << " O2rb:"<< O2rb << std::endl;
+  std::cout << " O3lf:"<< O3lf << " O3rf:"<< O3rf << " O3lb:"<< O3lb << " O3rb:"<< O3rb << std::endl;
   std::cout << " O4lf:"<< O4lf << " O4rf:"<< O4rf << " O4lb:"<< O4lb << " O4rb:"<< O4rb << std::endl;
 
   Ltlf = L1 * cos(O0lf) + L2 * cos(O0lf + O1lf);
@@ -63,30 +84,64 @@ void MatrixHInit(Eigen::MatrixXd &_H, const double alpha, const double beta, con
   Wf = -s * sin(O3rf + O4rf) - Ltrf * cos(O3rf);
   Wb = -s * sin(O3rb + O4rb) - Ltrb * cos(O3rb);
 
+	T << 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+		0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
 
- _H <<  - (Pr*Rl*Rr*(L2*cos(O0lf + O1lf) + L1*cos(O0lf) - L*sin(O0lf + O1lf + O2lf)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0, - (L2*sin(O0lf + O1lf))/4 - (L*cos(O0lf + O1lf + O2lf))/4 - (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L1*sin(O0lf))/4 - ((L2*cos(O0lf + O1lf) + L1*cos(O0lf) - L*sin(O0lf + O1lf + O2lf))*(Pr*Ql*Rr - Pr*Ql*Rl + Ql*Rl*Rr + Pr*Rl*Sr + Pr*Rr*Sl + Qr*Rl*Rr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr), - (Pl*Pr*Rr + Pl*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - ((Pr*Rr + Rl*Rr)*(L2*cos(O0lf + O1lf) + L1*cos(O0lf) - L*sin(O0lf + O1lf + O2lf)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                       - (Pr*Rl*Rr*(L2*cos(O0lf + O1lf) - L*sin(O0lf + O1lf + O2lf)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                   - (L2*sin(O0lf + O1lf))/4 - (L*cos(O0lf + O1lf + O2lf))/4 - (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - ((L2*cos(O0lf + O1lf) - L*sin(O0lf + O1lf + O2lf))*(Pr*Ql*Rr - Pr*Ql*Rl + Ql*Rl*Rr + Pr*Rl*Sr + Pr*Rr*Sl + Qr*Rl*Rr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                - (Pl*Pr*Rr + Pl*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - ((Pr*Rr + Rl*Rr)*(L2*cos(O0lf + O1lf) - L*sin(O0lf + O1lf + O2lf)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                 (L*Pr*Rl*Rr*sin(O0lf + O1lf + O2lf))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                                                                       (L*sin(O0lf + O1lf + O2lf)*(Pr*Ql*Rr - Pr*Ql*Rl + Ql*Rl*Rr + Pr*Rl*Sr + Pr*Rr*Sl + Qr*Rl*Rr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L*cos(O0lf + O1lf + O2lf))/4,                                          (L*sin(O0lf + O1lf + O2lf)*(Pr*Rr + Rl*Rr))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - (Pl*Pr*Rr + Pl*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                                                                                                                                                            0,   (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) - (Ub*Wb*Wf*(s*sin(O3lf + O4lf) - Ltlf*cos(O3lf)))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,   (Ub*Uf*Wb + Uf*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) - ((s*sin(O3lf + O4lf) - Ltlf*cos(O3lf))*(Ub*Wb + Wb*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-                                                                                                                                                                                            0,                      (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) - (Ub*Wb*Wf*s*sin(O3lf + O4lf))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,                      (Ub*Uf*Wb + Uf*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) - (s*sin(O3lf + O4lf)*(Ub*Wb + Wb*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-          (Pl*Rl*Rr*(L2*cos(O0rf + O1rf) + L1*cos(O0rf) - L*sin(O0rf + O1rf + O2rf)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) + (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,   (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L*cos(O0rf + O1rf + O2rf))/4 - (L2*sin(O0rf + O1rf))/4 - (L1*sin(O0rf))/4 + ((L2*cos(O0rf + O1rf) + L1*cos(O0rf) - L*sin(O0rf + O1rf + O2rf))*(Pl*Qr*Rl - Pl*Qr*Rr + Pl*Rl*Sr + Pl*Rr*Sl + Ql*Rl*Rr + Qr*Rl*Rr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),   (Pl*Pr*Rl + Pr*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) + ((Pl*Rl + Rl*Rr)*(L2*cos(O0rf + O1rf) + L1*cos(O0rf) - L*sin(O0rf + O1rf + O2rf)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                         (Pl*Rl*Rr*(L2*cos(O0rf + O1rf) - L*sin(O0rf + O1rf + O2rf)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) + (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                     (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L*cos(O0rf + O1rf + O2rf))/4 - (L2*sin(O0rf + O1rf))/4 + ((L2*cos(O0rf + O1rf) - L*sin(O0rf + O1rf + O2rf))*(Pl*Qr*Rl - Pl*Qr*Rr + Pl*Rl*Sr + Pl*Rr*Sl + Ql*Rl*Rr + Qr*Rl*Rr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                  (Pl*Pr*Rl + Pr*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) + ((Pl*Rl + Rl*Rr)*(L2*cos(O0rf + O1rf) - L*sin(O0rf + O1rf + O2rf)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                 (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (L*Pl*Rl*Rr*sin(O0rf + O1rf + O2rf))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                                                                       (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L*cos(O0rf + O1rf + O2rf))/4 - (L*sin(O0rf + O1rf + O2rf)*(Pl*Qr*Rl - Pl*Qr*Rr + Pl*Rl*Sr + Pl*Rr*Sl + Ql*Rl*Rr + Qr*Rl*Rr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                                          (Pl*Pr*Rl + Pr*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - (L*sin(O0rf + O1rf + O2rf)*(Pl*Rl + Rl*Rr))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                                                                                                                                                            0, - (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) - (Ub*Uf*Wb*(s*sin(O3rf + O4rf) + Ltrf*cos(O3rf)))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0, - (Ub*Uf*Wf + Ub*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) - ((s*sin(O3rf + O4rf) + Ltrf*cos(O3rf))*(Ub*Uf + Ub*Wb))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-                                                                                                                                                                                            0,                    - (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) - (Ub*Uf*Wb*s*sin(O3rf + O4rf))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,                    - (Ub*Uf*Wf + Ub*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) - (s*sin(O3rf + O4rf)*(Ub*Uf + Ub*Wb))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-          (Pl*Pr*Rr*(L2*cos(O0lb + O1lb) + L1*cos(O0lb) + L*sin(O0lb + O1lb + O2lb)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) + (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,   (L*cos(O0lb + O1lb + O2lb))/4 - (L2*sin(O0lb + O1lb))/4 + (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L1*sin(O0lb))/4 + ((L2*cos(O0lb + O1lb) + L1*cos(O0lb) + L*sin(O0lb + O1lb + O2lb))*(Pl*Pr*Sl + Pl*Pr*Sr + Pl*Qr*Rr + Pr*Ql*Rr - Pl*Rr*Sl + Pr*Rr*Sl))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),   (Pl*Pr*Rl + Pr*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) + ((Pl*Pr + Pr*Rr)*(L2*cos(O0lb + O1lb) + L1*cos(O0lb) + L*sin(O0lb + O1lb + O2lb)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                         (Pl*Pr*Rr*(L2*cos(O0lb + O1lb) + L*sin(O0lb + O1lb + O2lb)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) + (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                     (L*cos(O0lb + O1lb + O2lb))/4 - (L2*sin(O0lb + O1lb))/4 + (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) + ((L2*cos(O0lb + O1lb) + L*sin(O0lb + O1lb + O2lb))*(Pl*Pr*Sl + Pl*Pr*Sr + Pl*Qr*Rr + Pr*Ql*Rr - Pl*Rr*Sl + Pr*Rr*Sl))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                  (Pl*Pr*Rl + Pr*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) + ((Pl*Pr + Pr*Rr)*(L2*cos(O0lb + O1lb) + L*sin(O0lb + O1lb + O2lb)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                 (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) + (L*Pl*Pr*Rr*sin(O0lb + O1lb + O2lb))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                                                                       (L*cos(O0lb + O1lb + O2lb))/4 + (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) + (L*sin(O0lb + O1lb + O2lb)*(Pl*Pr*Sl + Pl*Pr*Sr + Pl*Qr*Rr + Pr*Ql*Rr - Pl*Rr*Sl + Pr*Rr*Sl))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                                          (Pl*Pr*Rl + Pr*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) + (L*sin(O0lb + O1lb + O2lb)*(Pl*Pr + Pr*Rr))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                                                                                                                                                            0,   (Uf*Wb*Wf*(s*sin(O3lb + O4lb) - Ltlb*cos(O3lb)))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) - (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,   ((s*sin(O3lb + O4lb) - Ltlb*cos(O3lb))*(Uf*Wf + Wb*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) - (Ub*Uf*Wf + Ub*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-                                                                                                                                                                                            0,                      (Uf*Wb*Wf*s*sin(O3lb + O4lb))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) - (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,                      (s*sin(O3lb + O4lb)*(Uf*Wf + Wb*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) - (Ub*Uf*Wf + Ub*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-        - (Pl*Pr*Rl*(L2*cos(O0rb + O1rb) + L1*cos(O0rb) + L*sin(O0rb + O1rb + O2rb)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,   (L*cos(O0rb + O1rb + O2rb))/4 - (L2*sin(O0rb + O1rb))/4 - (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L1*sin(O0rb))/4 - ((L2*cos(O0rb + O1rb) + L1*cos(O0rb) + L*sin(O0rb + O1rb + O2rb))*(Pl*Pr*Sl + Pl*Qr*Rl + Pr*Ql*Rl + Pl*Pr*Sr + Pl*Rl*Sr - Pr*Rl*Sr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr), - (Pl*Pr*Rr + Pl*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - ((Pl*Pr + Pl*Rl)*(L2*cos(O0rb + O1rb) + L1*cos(O0rb) + L*sin(O0rb + O1rb + O2rb)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                       - (Pl*Pr*Rl*(L2*cos(O0rb + O1rb) + L*sin(O0rb + O1rb + O2rb)))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                     (L*cos(O0rb + O1rb + O2rb))/4 - (L2*sin(O0rb + O1rb))/4 - (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - ((L2*cos(O0rb + O1rb) + L*sin(O0rb + O1rb + O2rb))*(Pl*Pr*Sl + Pl*Qr*Rl + Pr*Ql*Rl + Pl*Pr*Sr + Pl*Rl*Sr - Pr*Rl*Sr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                - (Pl*Pr*Rr + Pl*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - ((Pl*Pr + Pl*Rl)*(L2*cos(O0rb + O1rb) + L*sin(O0rb + O1rb + O2rb)))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                               - (Pl*Pr*Rl*Rr)/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr) - (L*Pl*Pr*Rl*sin(O0rb + O1rb + O2rb))/(Pl*Pr*Rl - Pl*Pr*Rr - Pl*Rl*Rr + Pr*Rl*Rr),                                                                                                                                                          0,                                                                                       (L*cos(O0rb + O1rb + O2rb))/4 - (Pl*Pr*Rl*Sr + Pl*Pr*Rr*Sl + Pl*Qr*Rl*Rr + Pr*Ql*Rl*Rr)/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr) - (L*sin(O0rb + O1rb + O2rb)*(Pl*Pr*Sl + Pl*Qr*Rl + Pr*Ql*Rl + Pl*Pr*Sr + Pl*Rl*Sr - Pr*Rl*Sr))/(4*Pl*Pr*Rl - 4*Pl*Pr*Rr - 4*Pl*Rl*Rr + 4*Pr*Rl*Rr),                                        - (Pl*Pr*Rr + Pl*Rl*Rr)/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr) - (L*sin(O0rb + O1rb + O2rb)*(Pl*Pr + Pl*Rl))/(2*Pl*Pr*Rl - 2*Pl*Pr*Rr - 2*Pl*Rl*Rr + 2*Pr*Rl*Rr),                                                                                                                                                                                         0,
-                                                                                                                                                                                            0,   (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) + (Ub*Uf*Wf*(s*sin(O3rb + O4rb) + Ltrb*cos(O3rb)))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,   (Ub*Uf*Wb + Uf*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) + ((s*sin(O3rb + O4rb) + Ltrb*cos(O3rb))*(Ub*Uf + Uf*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf),
-                                                                                                                                                                                            0,                      (Ub*Uf*Wb*Wf)/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf) + (Ub*Uf*Wf*s*sin(O3rb + O4rb))/(Ub*Uf*Wb - Ub*Uf*Wf - Ub*Wb*Wf + Uf*Wb*Wf),                                                                                                                                                                                                                                                                                                                                                                                     0,                                                                                                                                                                                                                    0,                      (Ub*Uf*Wb + Uf*Wb*Wf)/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf) + (s*sin(O3rb + O4rb)*(Ub*Uf + Uf*Wf))/(2*Ub*Uf*Wb - 2*Ub*Uf*Wf - 2*Ub*Wb*Wf + 2*Uf*Wb*Wf);
+		0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
+		Pl, 0, Ql, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, Pr, 0, Qr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Rl, 0, Sl, 1, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Rr, 0, Sr, 1, 0,
+		0, Uf, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, Wf, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Ub, 0, 0, 1, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Wb, 0, 0, 1;
 
- std::cout <<"H out " << std::endl << _H << std::endl;
+    Jlf<<-L1*cos(O0lf)-L2*cos(O0lf+O1lf)+L*sin(O0lf+O1lf+O2lf),0,-L1*sin(O0lf)-L2*sin(O0lf+O1lf)-L*cos(O0lf+O1lf+O2lf),1,0,
+          -L2*cos(O0lf+O1lf)+L*sin(O0lf+O1lf+O2lf),0,-L2*sin(O0lf+O1lf)-L*cos(O0lf+O1lf+O2lf),1,0,
+          L*sin(O0lf+O1lf+O2lf),0,-L*cos(O0lf+O1lf+O2lf),1,0,
+          0,s*sin(O3lf+O4lf)-Ltlf*cos(O3lf),0,0,1,
+          0,s*sin(O3lf+O4lf),0,0,1;
+
+    Jrf<<-L1*cos(O0rf)-L2*cos(O0rf+O1rf)+L*sin(O0rf+O1rf+O2rf),0,-L1*sin(O0rf)-L2*sin(O0rf+O1rf)-L*cos(O0rf+O1rf+O2rf),1,0,
+          -L2*cos(O0rf+O1rf)+L*sin(O0rf+O1rf+O2rf),0,-L2*sin(O0rf+O1rf)-L*cos(O0rf+O1rf+O2rf),1,0,
+          L*sin(O0rf+O1rf+O2rf),0,-L*cos(O0rf+O1rf+O2rf),1,0,
+          0,-s*sin(O3rf+O4rf)-Ltrf*cos(O3rf),0,0,1,
+          0,-s*sin(O3rf+O4rf),0,0,1;
+
+    Jlb<<-L1*cos(O0lb)-L2*cos(O0lb+O1lb)-L*sin(O0lb+O1lb+O2lb),0,-L1*sin(O0lb)-L2*sin(O0lb+O1lb)+L*cos(O0lb+O1lb+O2lb),1,0,
+          -L2*cos(O0lb+O1lb)-L*sin(O0lb+O1lb+O2lb),0,-L2*sin(O0lb+O1lb)+L*cos(O0lb+O1lb+O2lb),1,0,
+          -L*sin(O0lb+O1lb+O2lb),0,+L*cos(O0lb+O1lb+O2lb),1,0,
+          0,s*sin(O3lb+O4lb)-Ltlb*cos(O3lb),0,0,1,
+          0,s*sin(O3lb+O4lb),0,0,1;
+
+    Jrb<<-L1*cos(O0rb)-L2*cos(O0rb+O1rb)-L*sin(O0rb+O1rb+O2rb),0,-L1*sin(O0rb)-L2*sin(O0rb+O1rb)+L*cos(O0rb+O1rb+O2rb),1,0,
+          -L2*cos(O0rb+O1rb)-L*sin(O0rb+O1rb+O2rb),0,-L2*sin(O0rb+O1rb)+L*cos(O0rb+O1rb+O2rb),1,0,
+          -L*sin(O0rb+O1rb+O2rb),0,+L*cos(O0rb+O1rb+O2rb),1,0,
+          0,-s*sin(O3rb+O4rb)-Ltrb*cos(O3rb),0,0,1,
+          0,-s*sin(O3rb+O4rb),0,0,1;
+
+  T_ = pseudoInverse(T);
+  std::cout << "pinv T_ " << T_ << std::endl;
+  K = T_.block<20, 5>(0, 0);
+  std::cout << "K Mat " << K << std::endl;
+
+  Jtotal.block<5, 5>(0, 0) = Jlf;
+  Jtotal.block<5, 5>(5, 5) = Jrf;
+  Jtotal.block<5, 5>(10, 10) = Jlb;
+  Jtotal.block<5, 5>(15, 15) = Jrb;
+
+  _H = Jtotal * K;
 }
 
 
@@ -133,7 +188,7 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
 
   _F = KMat * Pose + BMat * Veloc;
 
-  std::cout << "H In " << std::endl << _H << std::endl;
+  // std::cout << "H In " << std::endl << _H << std::endl;
   std::cout << "pose Matrix:" << std::endl << Pose << std::endl;
   std::cout << "Veloc Matrix:" << std::endl << Veloc << std::endl;
   std::cout << "K Matrix:" << std::endl << KMat << std::endl;
@@ -155,6 +210,6 @@ void TorqueCalculate(Eigen::MatrixXd &_H, Eigen::MatrixXd &_F, const Spring_Damp
   rbTorque[(int)JointEnumdef::LegUp] = torMat(2+15, 0);
   rbTorque[(int)JointEnumdef::Shoulder] = -torMat(4+15, 0);
 
-  std::cout << "tormat: " << torMat << std::endl;
+  std::cout << "tormat: " << std::endl << torMat << std::endl;
 }
 
