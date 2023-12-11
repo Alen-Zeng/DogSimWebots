@@ -16,24 +16,61 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.2562737055327573 -0.4087297897867399 0.8759359261917488 4.828456499814518
-  position -0.5582726967134841 2.703424847651554 2.475551614718458
+  orientation 0.10337572658899491 0.12444331946621989 -0.986826894339846 1.3994218698899088
+  position -0.9820016160266514 14.108082259347263 3.957262105960016
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 10 10
+  floorSize 37 16
   floorAppearance Parquetry {
     type "dark strip"
   }
 }
 dog_asm2 {
-  translation 0 0 0.78
+  translation -2.7 -0.16 0.78
   controller "DogController"
 }
 WoodenBox {
-  translation 0.96 0 0.3
-  size 0.4 0.1 0.8
+  translation 1.01701 -0.0202264 -0.182363
+  rotation 0.8373771513429545 -0.5419490979489082 0.07134901289522934 0.15
+  size 3 3 0.8
+}
+WoodenBox {
+  translation -0.906745 -0.0357291 -0.332965
+  rotation 0.8373771513429545 -0.5419490979489082 0.07134901289522934 0.15
+  name "wooden box(5)"
+  size 3 3 0.8
+}
+WoodenBox {
+  translation 3.10477 0.00750042 -0.0144725
+  rotation 0.8373771513429545 -0.5419490979489082 0.07134901289522934 0.15
+  name "wooden box(1)"
+  size 3 3 0.8
+}
+WoodenBox {
+  translation 5.90182 -0.0130528 0.0894658
+  rotation 1 0 0 0.1
+  name "wooden box(2)"
+  size 3 3 0.8
+}
+WoodenBox {
+  translation 8.76182 -0.010054 0.0295408
+  rotation 1 0 0 0.05
+  name "wooden box(3)"
+  size 3 3 0.8
+}
+WoodenBox {
+  translation 11.6818 -0.0115534 -0.0403725
+  rotation 1 0 0 0
+  name "wooden box(4)"
+  size 3 3 0.8
+}
+WoodenBox {
+  translation 11.6818 -0.0145522 -0.100298
+  rotation 1 0 0 -0.05
+  name "wooden box(6)"
+  size 3 3 0.8
 }

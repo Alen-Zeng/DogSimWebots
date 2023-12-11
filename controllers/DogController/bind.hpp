@@ -103,6 +103,8 @@ public:
   void DogInit(int timestep, webots::Robot *(&robot), DogLegClassdef (&legs)[4], webots::InertialUnit *(&imu));
   void IMUUpdate();
   void PositionUpdate();
+  void GOHead();
+  void StopGO();
 
   DogClassdef(/* args */){};
   ~DogClassdef(){};
@@ -116,6 +118,7 @@ int timeStep; /* 仿真周期 */
 DogClassdef Dog;
 webots::Robot *robot;
 double L=0.2965, L1=0.33, L2=0.33, s=0.09;
+double lfhei=0.33, rfhei=0.33, lbhei=0.33, rbhei=0.33;
 /* Function declarations -----------------------------------------------------*/
 
 #ifndef Radians
@@ -169,7 +172,7 @@ bool DogLegClassdef::Reset(double shoulder, double legup, double legdown)
   {
     for (auto j : LegJoint)
     {
-      j->setVelocity(2);
+      j->setVelocity(1.5);
       if(j==LegJoint[(int)JointEnumdef::Wheel])
       {
         /* 重新开启轮子输出 */
@@ -252,10 +255,59 @@ void DogClassdef::IMUUpdate()
     IMU_RPY[i] = IMU->getRollPitchYaw()[i];
   }
   // std::cout << "imu quatenion: " << IMU_Quaternion[0] << " " << IMU_Quaternion[1] << " " << IMU_Quaternion[2] << " " << IMU_Quaternion[3] << std::endl;
-  std::cout << "imu rpy: " << IMU_RPY[0] << " " << IMU_RPY[1] << " " << IMU_RPY[2] << std::endl;
+  // std::cout << "imu rpy: " << IMU_RPY[0] << " " << IMU_RPY[1] << " " << IMU_RPY[2] << std::endl;
 }
 
+/**
+ * @brief 停止前进
+ * 
+ */
+void DogClassdef::StopGO()
+{
+  Legs[(int)DirEnumdef::LF].JointPositionUpdate();
+  Legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(1);
+  Legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Wheel]->setPosition(Legs[(int)DirEnumdef::LF].JointPosition[(int)JointEnumdef::Wheel]);
+  Legs[(int)DirEnumdef::RF].JointPositionUpdate();
+  Legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(-1);
+  Legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::Wheel]->setPosition(Legs[(int)DirEnumdef::RF].JointPosition[(int)JointEnumdef::Wheel]);
+  Legs[(int)DirEnumdef::LB].JointPositionUpdate();
+  Legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(1);
+  Legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::Wheel]->setPosition(Legs[(int)DirEnumdef::LB].JointPosition[(int)JointEnumdef::Wheel]);
+  Legs[(int)DirEnumdef::RB].JointPositionUpdate();
+  Legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(-1);
+  Legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::Wheel]->setPosition(Legs[(int)DirEnumdef::RB].JointPosition[(int)JointEnumdef::Wheel]);
+}
+
+void DogClassdef::GOHead()
+{
+  double vec = 5;
+  Legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Wheel]->setPosition(INFINITY);
+  Legs[(int)DirEnumdef::LF].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(vec);
+  Legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::Wheel]->setPosition(INFINITY);
+  Legs[(int)DirEnumdef::RF].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(-vec);
+  Legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::Wheel]->setPosition(INFINITY);
+  Legs[(int)DirEnumdef::LB].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(vec);
+  Legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::Wheel]->setPosition(INFINITY);
+  Legs[(int)DirEnumdef::RB].LegJoint[(int)JointEnumdef::Wheel]->setVelocity(-vec);
+}
+
+/**
+ * @brief 设置狗腿z方向高度
+ * 
+ * @param height 
+ */
 void DogLegClassdef::SetHeight(double height)
 {
-  
+  static double O1, O2;
+  if (PositiveFold)
+    O2 = acos(height / (2 * L2));
+  else
+    O2 = -acos(height / (2 * L2));
+
+  O1 = -2 * O2;
+  // std::cout << "O1:" << O1 << std::endl;
+  // std::cout << "O2:" << O2 << std::endl;
+  LegJoint[(int)JointEnumdef::LegDown]->setVelocity(3);
+  LegJoint[(int)JointEnumdef::LegUp]->setPosition(O2);
+  LegJoint[(int)JointEnumdef::LegDown]->setPosition(O1);
 }
